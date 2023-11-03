@@ -1,0 +1,263 @@
+.cursor-pointer {
+    cursor: pointer;
+}
+
+/* CSS for the birth chart layout */
+.chart-container {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); /* 4 columns for the houses */
+    grid-template-rows: repeat(2, 1fr); /* 3 rows for the houses */
+    gap: 10px; /* Adjust the gap as needed */
+    width: 100%; /* Make the chart container responsive */
+    min-width: 10px;
+    max-width: 10px;
+}
+
+.house {
+    border: 1px solid #ccc; /* House border style */
+    padding: 10px;
+    text-align: center;
+}
+
+.planet {
+    margin: 5px;
+    background-color: #7b68ee; /* Customize the planet's color */
+    padding: 5px;
+    border-radius: 50%; /* Make it circular */
+    color: white;
+}
+
+/* Responsive layout adjustments */
+@media (max-width: 768px) {
+    .chart-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .chart-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.out-btn {
+height: 25px;
+padding: 0px 3px !important;
+margin-top: -5px;
+font-size: small!important;
+}
+
+.custom-btn {
+height: 25px;
+width: auto;
+padding: 0 3px !important;
+margin-top: -5px;
+font-size: small!important;
+}
+
+.custom-btn-set {
+height: 25px;
+width: auto;
+padding: 0 10px !important;
+margin-top: -5px;
+font-size: inherit!important;
+}
+
+.btn-plus-minus{
+height: 25px;
+width: 25px;
+padding: 0 3px !important;
+margin-top: -5px;
+}
+
+.cross-btn {
+height: 25px;
+width: 25px;
+padding: 0px !important;
+margin-top: -5px;
+font-size: small!important;
+}
+
+.cross-btn-runs {
+height: 30px;
+width: 8%;
+padding: 0px !important;
+font-size: 14px!important;
+font-weight: 500!important;
+}
+
+.btn-runs-style-1 {
+height: 30px;
+width: 18%;
+margin-top: 3px;
+padding: 0px !important;
+font-size: 14px!important;
+font-weight: 500!important;
+}
+
+.btn-runs-style-2 {
+height: 30px;
+width:auto;
+padding: 3px !important;
+font-size: 14px!important;
+font-weight: 500!important;
+}
+
+.custom-text-box {
+height: 20px;
+width: 55px;
+}
+
+.custom-text-box-auto {
+height: 20px;
+width: 180px;
+}
+
+.custom-text-box-fancy {
+height: 20px;
+width: 140px;
+}
+
+.custom-remove-sec {
+display: flex !important;
+align-items: center !important;
+}
+
+.move-to-links {
+color: #337ab7;
+text-decoration: none;
+font-weight: 500;
+}
+
+.move-to-links:hover {
+text-decoration: underline;
+cursor: pointer;
+}
+
+.fancy-info-width {
+width: 30%!important;
+}
+
+.match-odd-width {
+width: 30%!important;
+}
+
+.runs-width {
+width: 40%!important;
+}
+
+.custom-text-add{
+height: 20px;
+width: auto;
+}
+
+.custom-text-score{
+height: 20px;
+width: 100px;
+}
+
+.custom-team-text {
+height: 20px;
+width: 65px;
+}
+
+.custom-text-code-one {
+height: 20px;
+width: 80px;
+color: #ffffff;
+background-color: #3f51b5
+}
+
+.custom-container {
+max-width: fit-content!important;
+}
+
+.custom-text-code-two {
+height: 20px;
+width: 80px;
+color: #ffffff;
+background-color: #e04544
+}
+
+.btn-pink {
+background-color: deeppink!important; 
+}
+
+.btn {
+color: #ffffff!important;
+}
+
+
+.custom-card-header {
+padding: 3px!important; 
+}
+
+.custom-card-body {
+padding: 0 3px!important;
+}
+
+.live-match-page label {
+font-size: small !important;
+font-weight: bold !important;
+}
+
+.custom-textarea {
+width: 100%;
+margin-top: 1px;
+min-height: 30px!important;
+height:30px!important;
+}
+
+.header-active {
+color: red!important;
+}
+
+.loader {
+border: 16px solid #f3f3f3;
+border-radius: 50%;
+border-top: 16px solid #3498db;
+width: 50px;
+height: 50px;
+-webkit-animation: spin 2s linear infinite; /* Safari */
+animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+0% { -webkit-transform: rotate(0deg); }
+100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+0% { transform: rotate(0deg); }
+100% { transform: rotate(360deg); }
+}
+
+.textarea-style {
+font-size: 40px;
+width: 100%;
+height: 80px;
+text-align: center;
+overflow: hidden;
+box-sizing: border-box;
+border: 1px solid #d2d2d2;
+border-radius: 5px;
+}
+
+.margin-left-set{
+float: right;
+margin-bottom: 10px;
+}
+
+.token-style {
+margin-top: 5px;
+margin-bottom: 5px;
+text-align: center;
+}
+
+.live-match-container label { 
+    margin-bottom: 0px!important;
+}
+.form-check-input {
+    margin-left: 0px;
+}
