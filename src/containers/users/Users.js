@@ -84,7 +84,7 @@ export default function Users() {
                             </div>
                             {/* /.card-header */}
                             <div className="card-body">
-                                <table id="example1" className="table table-bordered table-striped">
+                                <table id="example7" className="table table-bordered table-striped">
                                     <thead>
                                         <tr>
                                             <th>Sr. No.</th>
@@ -117,7 +117,7 @@ export default function Users() {
                                         </tr>
                                     )) : 
                                         <tr>
-                                            <td colSpan={8}>
+                                            <td colSpan={9}>
                                                 No Users Found
                                             </td>
                                         </tr>

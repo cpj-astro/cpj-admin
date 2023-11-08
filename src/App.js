@@ -24,6 +24,8 @@ import LiveMatchControl from './containers/matches/LiveMatchControl';
 import SignIn from './containers/auth/SignIn';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CreateKundli from './containers/kundlis/CreateKundli';
+import UploadAstrologyData from './containers/astrology/UploadAstrologyData';
 
 export default function App() {
   return (
@@ -61,6 +63,13 @@ export default function App() {
 
               {/* Cup Rates */}
               <Route path="/cup-rates" element={<CupRates/>} />
+              
+              {/* Kundli Routes */}
+              <Route path="/create-kundli" element={<CreateKundli/>} />
+
+              {/* Astrology Routes */}
+              <Route path="/upload-astrology-data" element={<UploadAstrologyData/>} />
+              <Route path="/view-astrology-data" element={<UploadAstrologyData/>} />
             </Route>
             <Route path='/login' element={<SignIn/>}/>
           </Routes>
