@@ -180,6 +180,7 @@ export default function UpcomingMatches() {
                                         <th>Match No.</th>
                                         <th>Series</th>
                                         <th>Move To</th>
+                                        <th>Add Astrology</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -192,6 +193,7 @@ export default function UpcomingMatches() {
                                             <td> {match.match_id ? match.match_id : 'N/A'} </td>
                                             <td> {match.series_name ? match.series_name : 'N/A'} </td>
                                             <td> <span className='text-primary text-bold cursor-pointer' onClick={()=>{sendToLive(match.match_id, 'live')}}>Live</span> | <span className='text-primary text-bold cursor-pointer' onClick={()=>{sendToRecent(match.match_id, 'recent')}}>Recent</span> </td>
+                                            <td> <a  className='btn btn-primary p-0 px-2' href={`/add-match-astrology/${match.match_id}`} >Add Astrology</a> </td>
                                             <td> 
                                                 <Link to={`/edit-match/${match.match_id}`} title="Edit" type="button">
                                                     <i class="fa fa-edit"></i>
@@ -214,6 +216,7 @@ export default function UpcomingMatches() {
                                         <th>Match No.</th>
                                         <th>Series</th>
                                         <th>Move To</th>
+                                        <th>Add Astrology</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>

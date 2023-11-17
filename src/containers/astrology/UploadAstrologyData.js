@@ -245,7 +245,7 @@ export default function UploadAstrologyData() {
                                                 style={{ cursor: 'pointer' }}
                                                 onClick={() => openModal(rowIndex, columnIndex, individualExcelData[key])}
                                             >
-                                                {individualExcelData[key].length > 5 ? (
+                                                {individualExcelData[key].length > 20 ? (
                                                 individualExcelData[key].substring(0, 20) + '...'
                                                 ) : (
                                                     individualExcelData[key]
