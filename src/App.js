@@ -30,12 +30,13 @@ import ViewAstrologyData from './containers/astrology/ViewAstrologyData';
 import AddMatchAstrology from './containers/matches/AddMatchAstrology';
 
 export default function App() {
+  console.log('REACT TURL', process.env.REACT_APP_PUBLIC_URL);
   return (
     <div className='wrapper'>
-      <Router basename="/admin">
+      <Router basename={process.env.REACT_APP_PUBLIC_URL}>
         <Fragment>
           <Routes>
-            <Route exact path='/' element={<PrivateRoute/>}>
+            <Route exact path={`${process.env.REACT_APP_PUBLIC_URL}/`} element={<PrivateRoute/>}>
               {/* Dashboard Routes */}
               <Route path="/" element={<Dashboard/>} />
 

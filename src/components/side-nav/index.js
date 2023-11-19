@@ -6,7 +6,7 @@ export default function SideNav() {
         <aside className="main-sidebar sidebar-dark-primary elevation-4">
             {/* Brand Logo */}
             <a href="/" className="brand-link">
-                <img src="/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" className="brand-image img-circle elevation-3" style={{opacity: '.8'}} />
+                <img src={`${process.env.REACT_APP_PUBLIC_URL}/dist/img/AdminLTELogo.png`} alt="AdminLTE Logo" className="brand-image img-circle elevation-3" style={{opacity: '.8'}} />
                 <span className="brand-text font-weight-light">CPJ - Admin</span>
             </a>
             {/* Sidebar */}
