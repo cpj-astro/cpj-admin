@@ -1192,7 +1192,7 @@ export default function LiveMatchControl() {
     
     return (
         <div className="live-match-container p-0">
-            <a href='/' className='ml-3'>Dashboard</a> | <a href='/live-matches'>Live Matches</a> | <a href="/">Logout</a>
+            <a href={`${process.env.REACT_APP_PUBLIC_URL}/`} className='ml-3'>Dashboard</a> | <a href={`${process.env.REACT_APP_PUBLIC_URL}/live-matches`}>Live Matches</a> | <span>Logout</span>
             <hr className='m-0 mb-2'/>
             <section className="content p-0">
                 <div className="container-fluid">

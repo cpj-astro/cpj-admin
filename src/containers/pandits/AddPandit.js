@@ -69,7 +69,7 @@ export default function AddPandit() {
                         </div>
                         <div className="col-sm-6">
                         <ol className="breadcrumb float-sm-right">
-                            <li className="breadcrumb-item"><a href="/">Dashboard</a></li>
+                            <li className="breadcrumb-item"><a href={`${process.env.REACT_APP_PUBLIC_URL}/`}>Dashboard</a></li>
                             <li className="breadcrumb-item active">Add Pandit</li>
                         </ol>
                         </div>

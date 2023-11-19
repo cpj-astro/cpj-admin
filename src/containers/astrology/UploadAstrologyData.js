@@ -174,7 +174,7 @@ export default function UploadAstrologyData() {
                 </div>
                 <div className="col-sm-6">
                     <ol className="breadcrumb float-sm-right">
-                    <li className="breadcrumb-item"><a href="/">Dashboard</a></li>
+                    <li className="breadcrumb-item"><a href={`${process.env.REACT_APP_PUBLIC_URL}/`}>Dashboard</a></li>
                     <li className="breadcrumb-item active">Upload Astrology Data</li>
                     </ol>
                 </div>
@@ -188,7 +188,7 @@ export default function UploadAstrologyData() {
                     <div className='card card-secondary'>
                     <div className="card-header">
                         <h3 className="card-title">Manage Astrology Data</h3>
-                        <a href="/templates/Excel-Template.xlsx" className="download-template-btn" role="button">
+                        <a href={`${process.env.REACT_APP_PUBLIC_URL}/templates/Excel-Template.xlsx`} className="download-template-btn" role="button">
                             <i className='fa fa-download'></i>&nbsp;&nbsp;Download Excel Template
                         </a>
                     </div>
