@@ -226,6 +226,7 @@ export default function LiveMatchControl() {
     
     useEffect(() => {
         try {
+            console.error("DB : ", db);
             onSnapshot(doc(db, "matchdata", id), (doc) => {
                 matchDatas = doc.data();    
                 if(!isObjectEmpty(matchDatas)){
