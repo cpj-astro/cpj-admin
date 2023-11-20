@@ -32,7 +32,7 @@ import AddMatchAstrology from './containers/matches/AddMatchAstrology';
 export default function App() {
   return (
     <div className='wrapper'>
-      <Router basename={process.env.REACT_APP_PUBLIC_URL}>
+      <Router>
         <Fragment>
           <Routes>
             <Route exact path='/' element={<PrivateRoute/>}>
