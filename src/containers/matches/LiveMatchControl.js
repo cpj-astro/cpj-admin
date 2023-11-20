@@ -225,143 +225,147 @@ export default function LiveMatchControl() {
     }, []);
     
     useEffect(() => {
-        onSnapshot(doc(db, "matchdata", id), (doc) => {
-            matchDatas = doc.data();    
-            if(!isObjectEmpty(matchDatas)){
-                onBatTeam = matchDatas.batting_team
-                setValue('batting_team', onBatTeam)
-                // let totalOverBalls = Number(getValues('match_over')) * 6
-                // if(onBatTeam == matchDatas.team_a_id) {
-                //     let teamAScore = matchDatas.team_a_score;
-                //     let teamAScoreOver = matchDatas.team_a_scores_over;
-                //     setValue('team_runs', teamAScore[1].score);
-                //     setValue('team_wickets', teamAScore[1].wicket);
-                //     setValue('team_curr_ovr', teamAScoreOver[0].over);
-                //     setValue('team_total_ovr', matchDatas.match_over);
-                //     setValue('target', matchDatas.target);
-                //     if(getValues('target') && getValues('team_runs')){
-                //         setValue('team_run_need', Number(getValues('target')) - Number(getValues('team_runs')));
-                //     }
-                //     var z = Number(getValues('team_curr_ovr'));
-                //     var int_z_part = Math.trunc(z); 
-                //     var float_z_part = Number((z-int_z_part).toFixed(2))
-                //     const totalZOver = int_z_part;
-                //     const totalZSplitOver = Number((float_z_part + "").split(".")[1]);
+        try {
+            onSnapshot(doc(db, "matchdata", id), (doc) => {
+                matchDatas = doc.data();    
+                if(!isObjectEmpty(matchDatas)){
+                    onBatTeam = matchDatas.batting_team
+                    setValue('batting_team', onBatTeam)
+                    // let totalOverBalls = Number(getValues('match_over')) * 6
+                    // if(onBatTeam == matchDatas.team_a_id) {
+                    //     let teamAScore = matchDatas.team_a_score;
+                    //     let teamAScoreOver = matchDatas.team_a_scores_over;
+                    //     setValue('team_runs', teamAScore[1].score);
+                    //     setValue('team_wickets', teamAScore[1].wicket);
+                    //     setValue('team_curr_ovr', teamAScoreOver[0].over);
+                    //     setValue('team_total_ovr', matchDatas.match_over);
+                    //     setValue('target', matchDatas.target);
+                    //     if(getValues('target') && getValues('team_runs')){
+                    //         setValue('team_run_need', Number(getValues('target')) - Number(getValues('team_runs')));
+                    //     }
+                    //     var z = Number(getValues('team_curr_ovr'));
+                    //     var int_z_part = Math.trunc(z); 
+                    //     var float_z_part = Number((z-int_z_part).toFixed(2))
+                    //     const totalZOver = int_z_part;
+                    //     const totalZSplitOver = Number((float_z_part + "").split(".")[1]);
+                        
+                    //     if(float_z_part === 0){
+                    //         setValue('team_rem_balls', totalOverBalls ? totalOverBalls - (Number(totalZOver) * 6) : '')
+                    //         setValue('team_curr_rate', getValues('team_runs') ? (Number(getValues('team_runs') / Number(totalZOver))).toFixed(2) : '')
+                    //     } else {
+                    //         setValue('team_rem_balls', totalOverBalls ? totalOverBalls - ((Number(totalZOver) * 6) + totalZSplitOver) : '')
+                    //         setValue('team_curr_rate', getValues('team_runs') ? (Number(getValues('team_runs') / ((totalZSplitOver/6) + totalZOver))).toFixed(2) : '')
+                    //     }
+                    //     setValue('team_rr_rate', getValues('team_run_need') && getValues('team_rem_balls') ? (Number(getValues('team_run_need') / Number(getValues('team_rem_balls'))) * 6).toFixed(2) : '')
+                    // } else if(onBatTeam == matchDatas.team_b_id) {
+                    //     let teamBScore = matchDatas.team_b_score;
+                    //     let teamBScoreOver = matchDatas.team_b_scores_over;
+                    //     setValue('team_runs', teamBScore[2].score);
+                    //     setValue('team_wickets', teamBScore[2].wicket);
+                    //     setValue('team_curr_ovr', teamBScoreOver[0].over);
+                    //     setValue('team_total_ovr', matchDatas.match_over);
+                    //     setValue('target', matchDatas.target);
+                    //     if(getValues('target') && getValues('team_runs')){
+                    //         setValue('team_run_need', Number(getValues('target')) - Number(getValues('team_runs')));
+                    //     }
+                    //     var z = Number(getValues('team_curr_ovr'));
+                    //     var int_z_part = Math.trunc(z); 
+                    //     var float_z_part = Number((z-int_z_part).toFixed(2))
+                    //     const totalZOver = int_z_part;
+                    //     const totalZSplitOver = Number((float_z_part + "").split(".")[1]);
+                    //     if(float_z_part === 0){
+                    //         setValue('team_rem_balls', totalOverBalls ? totalOverBalls - (Number(totalZOver) * 6) : '')
+                    //         setValue('team_curr_rate', getValues('team_runs') ? (Number(getValues('team_runs') / Number(totalZOver))).toFixed(2) : '')
+                    //     } else {
+                    //         setValue('team_rem_balls', totalOverBalls ? totalOverBalls - ((Number(totalZOver) * 6) + totalZSplitOver) : '')
+                    //         setValue('team_curr_rate', getValues('team_runs') ? (Number(getValues('team_runs') / ((totalZSplitOver/6) + totalZOver))).toFixed(2) : '')
+                    //     }
+                    //     setValue('team_rr_rate',  getValues('team_run_need') && getValues('team_rem_balls') ? (Number(getValues('team_run_need') / Number(getValues('team_rem_balls'))) * 6).toFixed(2) : '')
+                    // }
+                    setValue('first_circle', matchDatas && matchDatas.first_circle ? matchDatas.first_circle : '')
+                    setValue('batsman_1', matchDatas && matchDatas.batsman.length > 0 ? matchDatas.batsman[0].name : '')
+                    setSessionValue(matchDatas.session);
+                    setValue('batsman_1_balls', matchDatas && matchDatas.batsman.length > 0 ? matchDatas.batsman[0].ball : 0)
+                    setValue('batsman_1_runs', matchDatas && matchDatas.batsman.length > 0 ? matchDatas.batsman[0].run : 0)
+                    setValue('batsman_1_strike_rate', matchDatas && matchDatas.batsman.length > 0 ? matchDatas.batsman[0].strike_rate : 0)
+                    setValue('batsman_1_4s', matchDatas && matchDatas.batsman.length > 0 ? matchDatas.batsman[0].fours : 0)
+                    setValue('batsman_1_6s',matchDatas && matchDatas.batsman.length > 0 ?  matchDatas.batsman[0].sixes : 0)
+                    setValue('batsman_2', matchDatas && matchDatas.batsman.length > 0 ? matchDatas.batsman[1].name : 0)
+                    setValue('batsman_2_balls', matchDatas && matchDatas.batsman.length > 0 ? matchDatas.batsman[1].ball : 0)
+                    setValue('batsman_2_runs', matchDatas && matchDatas.batsman.length > 0 ? matchDatas.batsman[1].run : 0)
+                    setValue('batsman_2_strike_rate', matchDatas && matchDatas.batsman.length > 0 ? matchDatas.batsman[1].strike_rate : 0)
+                    setValue('batsman_2_4s', matchDatas && matchDatas.batsman.length > 0 ? matchDatas.batsman[1].fours : 0)
+                    setValue('batsman_2_6s', matchDatas && matchDatas.batsman.length > 0 ? matchDatas.batsman[1].sixes : 0)
+                    setValue('bowler', matchDatas && matchDatas.bolwer && matchDatas.bolwer.name ? matchDatas.bolwer.name : '')
+                    setValue('bowler_wicket', matchDatas && matchDatas.bolwer && matchDatas.bolwer.wicket ? matchDatas.bolwer.wicket : 0)
+                    setValue('bowler_runs', matchDatas && matchDatas.bolwer && matchDatas.bolwer.run ? matchDatas.bolwer.run : 0)
+                    setValue('bowler_overs', matchDatas && matchDatas.bolwer && matchDatas.bolwer.over ? matchDatas.bolwer.over : 0)
+                    setValue('bowlers_economy', matchDatas && matchDatas.bolwer && matchDatas.bolwer.economy ? matchDatas.bolwer.economy : 0)
+                    setValue('on_strike', matchDatas && matchDatas.on_strike ? matchDatas : '');
+    
+                    // setValue('target', matchDatas && matchDatas.target ? matchDatas.target : 0);
+                    setValue('team_a', matchDatas && matchDatas.team_a ? matchDatas.team_a : '');
+                    setValue('team_a_id', matchDatas && matchDatas.team_a_id ? matchDatas.team_a_id : 0);
+                    // setValue('team_a_img', matchDatas && matchDatas.team_a_img ? matchDatas.team_a_img : '');
+                    // setValue('team_a_over', matchDatas && matchDatas.team_a_over ? matchDatas.team_a_over : 0);
+                    // setValue('team_a_score', matchDatas && matchDatas.team_a_score ? matchDatas.team_a_score : 0);
+                    // setValue('team_a_scores', matchDatas && matchDatas.team_a_scores ? matchDatas.team_a_scores : 0);
+                    // setValue('team_a_scores_over', matchDatas && matchDatas.team_a_scores_over ? matchDatas.team_a_scores_over : 0);
+                    setValue('team_a_short', matchDatas && matchDatas.team_a_short ? matchDatas.team_a_short : '');
+                    setValue('team_b', matchDatas && matchDatas.team_b ? matchDatas.team_b : '');
+                    setValue('team_b_id', matchDatas && matchDatas.team_b_id ? matchDatas.team_b_id : 0);
+                    // setValue('team_b_img', matchDatas && matchDatas.team_b_img ? matchDatas.team_b_img : '');
+                    // setValue('team_b_over', matchDatas && matchDatas.team_b_over ? matchDatas.team_b_over : 0);
+                    // setValue('team_b_score', matchDatas && matchDatas.team_b_score ? matchDatas.team_b_score : 0);
+                    // setValue('team_b_scores', matchDatas && matchDatas.team_b_scores ? matchDatas.team_b_scores : 0);
+                    // setValue('team_b_scores_over', matchDatas && matchDatas.team_b_scores_over ? matchDatas.team_b_scores_over : 0);
+                    setValue('team_b_short', matchDatas && matchDatas.team_b_short ? matchDatas.team_b_short : '');
+                    // setValue('match_over', matchDatas && matchDatas.match_over ? matchDatas.match_over : 0);
                     
-                //     if(float_z_part === 0){
-                //         setValue('team_rem_balls', totalOverBalls ? totalOverBalls - (Number(totalZOver) * 6) : '')
-                //         setValue('team_curr_rate', getValues('team_runs') ? (Number(getValues('team_runs') / Number(totalZOver))).toFixed(2) : '')
-                //     } else {
-                //         setValue('team_rem_balls', totalOverBalls ? totalOverBalls - ((Number(totalZOver) * 6) + totalZSplitOver) : '')
-                //         setValue('team_curr_rate', getValues('team_runs') ? (Number(getValues('team_runs') / ((totalZSplitOver/6) + totalZOver))).toFixed(2) : '')
-                //     }
-                //     setValue('team_rr_rate', getValues('team_run_need') && getValues('team_rem_balls') ? (Number(getValues('team_run_need') / Number(getValues('team_rem_balls'))) * 6).toFixed(2) : '')
-                // } else if(onBatTeam == matchDatas.team_b_id) {
-                //     let teamBScore = matchDatas.team_b_score;
-                //     let teamBScoreOver = matchDatas.team_b_scores_over;
-                //     setValue('team_runs', teamBScore[2].score);
-                //     setValue('team_wickets', teamBScore[2].wicket);
-                //     setValue('team_curr_ovr', teamBScoreOver[0].over);
-                //     setValue('team_total_ovr', matchDatas.match_over);
-                //     setValue('target', matchDatas.target);
-                //     if(getValues('target') && getValues('team_runs')){
-                //         setValue('team_run_need', Number(getValues('target')) - Number(getValues('team_runs')));
-                //     }
-                //     var z = Number(getValues('team_curr_ovr'));
-                //     var int_z_part = Math.trunc(z); 
-                //     var float_z_part = Number((z-int_z_part).toFixed(2))
-                //     const totalZOver = int_z_part;
-                //     const totalZSplitOver = Number((float_z_part + "").split(".")[1]);
-                //     if(float_z_part === 0){
-                //         setValue('team_rem_balls', totalOverBalls ? totalOverBalls - (Number(totalZOver) * 6) : '')
-                //         setValue('team_curr_rate', getValues('team_runs') ? (Number(getValues('team_runs') / Number(totalZOver))).toFixed(2) : '')
-                //     } else {
-                //         setValue('team_rem_balls', totalOverBalls ? totalOverBalls - ((Number(totalZOver) * 6) + totalZSplitOver) : '')
-                //         setValue('team_curr_rate', getValues('team_runs') ? (Number(getValues('team_runs') / ((totalZSplitOver/6) + totalZOver))).toFixed(2) : '')
-                //     }
-                //     setValue('team_rr_rate',  getValues('team_run_need') && getValues('team_rem_balls') ? (Number(getValues('team_run_need') / Number(getValues('team_rem_balls'))) * 6).toFixed(2) : '')
-                // }
-                setValue('first_circle', matchDatas && matchDatas.first_circle ? matchDatas.first_circle : '')
-                setValue('batsman_1', matchDatas && matchDatas.batsman.length > 0 ? matchDatas.batsman[0].name : '')
-                setSessionValue(matchDatas.session);
-                setValue('batsman_1_balls', matchDatas && matchDatas.batsman.length > 0 ? matchDatas.batsman[0].ball : 0)
-                setValue('batsman_1_runs', matchDatas && matchDatas.batsman.length > 0 ? matchDatas.batsman[0].run : 0)
-                setValue('batsman_1_strike_rate', matchDatas && matchDatas.batsman.length > 0 ? matchDatas.batsman[0].strike_rate : 0)
-                setValue('batsman_1_4s', matchDatas && matchDatas.batsman.length > 0 ? matchDatas.batsman[0].fours : 0)
-                setValue('batsman_1_6s',matchDatas && matchDatas.batsman.length > 0 ?  matchDatas.batsman[0].sixes : 0)
-                setValue('batsman_2', matchDatas && matchDatas.batsman.length > 0 ? matchDatas.batsman[1].name : 0)
-                setValue('batsman_2_balls', matchDatas && matchDatas.batsman.length > 0 ? matchDatas.batsman[1].ball : 0)
-                setValue('batsman_2_runs', matchDatas && matchDatas.batsman.length > 0 ? matchDatas.batsman[1].run : 0)
-                setValue('batsman_2_strike_rate', matchDatas && matchDatas.batsman.length > 0 ? matchDatas.batsman[1].strike_rate : 0)
-                setValue('batsman_2_4s', matchDatas && matchDatas.batsman.length > 0 ? matchDatas.batsman[1].fours : 0)
-                setValue('batsman_2_6s', matchDatas && matchDatas.batsman.length > 0 ? matchDatas.batsman[1].sixes : 0)
-                setValue('bowler', matchDatas && matchDatas.bolwer && matchDatas.bolwer.name ? matchDatas.bolwer.name : '')
-                setValue('bowler_wicket', matchDatas && matchDatas.bolwer && matchDatas.bolwer.wicket ? matchDatas.bolwer.wicket : 0)
-                setValue('bowler_runs', matchDatas && matchDatas.bolwer && matchDatas.bolwer.run ? matchDatas.bolwer.run : 0)
-                setValue('bowler_overs', matchDatas && matchDatas.bolwer && matchDatas.bolwer.over ? matchDatas.bolwer.over : 0)
-                setValue('bowlers_economy', matchDatas && matchDatas.bolwer && matchDatas.bolwer.economy ? matchDatas.bolwer.economy : 0)
-                setValue('on_strike', matchDatas && matchDatas.on_strike ? matchDatas : '');
-
-                // setValue('target', matchDatas && matchDatas.target ? matchDatas.target : 0);
-                setValue('team_a', matchDatas && matchDatas.team_a ? matchDatas.team_a : '');
-                setValue('team_a_id', matchDatas && matchDatas.team_a_id ? matchDatas.team_a_id : 0);
-                // setValue('team_a_img', matchDatas && matchDatas.team_a_img ? matchDatas.team_a_img : '');
-                // setValue('team_a_over', matchDatas && matchDatas.team_a_over ? matchDatas.team_a_over : 0);
-                // setValue('team_a_score', matchDatas && matchDatas.team_a_score ? matchDatas.team_a_score : 0);
-                // setValue('team_a_scores', matchDatas && matchDatas.team_a_scores ? matchDatas.team_a_scores : 0);
-                // setValue('team_a_scores_over', matchDatas && matchDatas.team_a_scores_over ? matchDatas.team_a_scores_over : 0);
-                setValue('team_a_short', matchDatas && matchDatas.team_a_short ? matchDatas.team_a_short : '');
-                setValue('team_b', matchDatas && matchDatas.team_b ? matchDatas.team_b : '');
-                setValue('team_b_id', matchDatas && matchDatas.team_b_id ? matchDatas.team_b_id : 0);
-                // setValue('team_b_img', matchDatas && matchDatas.team_b_img ? matchDatas.team_b_img : '');
-                // setValue('team_b_over', matchDatas && matchDatas.team_b_over ? matchDatas.team_b_over : 0);
-                // setValue('team_b_score', matchDatas && matchDatas.team_b_score ? matchDatas.team_b_score : 0);
-                // setValue('team_b_scores', matchDatas && matchDatas.team_b_scores ? matchDatas.team_b_scores : 0);
-                // setValue('team_b_scores_over', matchDatas && matchDatas.team_b_scores_over ? matchDatas.team_b_scores_over : 0);
-                setValue('team_b_short', matchDatas && matchDatas.team_b_short ? matchDatas.team_b_short : '');
-                // setValue('match_over', matchDatas && matchDatas.match_over ? matchDatas.match_over : 0);
-                
-                setValue('match_odd_team_1_text_1', matchDatas && matchDatas.back1_raw ? matchDatas.back1_raw : '')
-                setValue('match_odd_team_1_text_2', matchDatas && matchDatas.lay1_raw ? matchDatas.lay1_raw : '')
-                setValue('match_odd_team_2_text_1', matchDatas && matchDatas.back2_raw ? matchDatas.back2_raw : '')
-                setValue('match_odd_team_2_text_2', matchDatas && matchDatas.lay2_raw ? matchDatas.lay2_raw : '')
-                setValue('back1', matchDatas && matchDatas.back1 ? matchDatas.back1 : '')
-                setValue('lay1', matchDatas && matchDatas.lay1 ? matchDatas.lay1 : '')
-                setValue('back2', matchDatas && matchDatas.back2 ? matchDatas.back2 : '')
-                setValue('lay2', matchDatas && matchDatas.lay2 ? matchDatas.lay2 : '')
-
-                setValue('match_com_odd_team_1_text_1', matchDatas && matchDatas.mc_back1_raw ? matchDatas.mc_back1_raw : '')
-                setValue('match_com_odd_team_1_text_2', matchDatas && matchDatas.mc_lay1_raw ? matchDatas.mc_lay1_raw : '')
-                setValue('match_com_odd_team_2_text_1', matchDatas && matchDatas.mc_back2_raw ? matchDatas.mc_back2_raw : '')
-                setValue('match_com_odd_team_2_text_2', matchDatas && matchDatas.mc_lay2_raw ? matchDatas.mc_lay2_raw : '')
-                setValue('mc_odd_back1', matchDatas && matchDatas.match_completed && matchDatas.match_completed.t1_back ? matchDatas.match_completed.t1_back : '')
-                setValue('mc_odd_lay1', matchDatas && matchDatas.match_completed && matchDatas.match_completed.t1_lay ? matchDatas.match_completed.t1_lay : '')
-                setValue('mc_odd_back2', matchDatas &&  matchDatas.match_completed && matchDatas.match_completed.t2_back ? matchDatas.match_completed.t2_back : '')
-                setValue('mc_odd_lay2', matchDatas &&  matchDatas.match_completed && matchDatas.match_completed.t2_lay ? matchDatas.match_completed.t2_lay : '')
-
-                setValue('match_tied_odd_team_1_text_1', matchDatas && matchDatas.mt_back1_raw ? matchDatas.mt_back1_raw : '')
-                setValue('match_tied_odd_team_1_text_2', matchDatas && matchDatas.mt_lay1_raw ? matchDatas.mt_lay1_raw : '')
-                setValue('match_tied_odd_team_2_text_1', matchDatas && matchDatas.mt_back2_raw ? matchDatas.mt_back2_raw : '')
-                setValue('match_tied_odd_team_2_text_2', matchDatas && matchDatas.mt_lay2_raw ? matchDatas.mt_lay2_raw : '')
-                setValue('mt_odd_back1', matchDatas && matchDatas.match_tied && matchDatas.match_tied.t1_back ? matchDatas.match_tied.t1_back : '')
-                setValue('mt_odd_lay1', matchDatas && matchDatas.match_tied && matchDatas.match_tied.t1_lay ? matchDatas.match_tied.t1_lay : '')
-                setValue('mt_odd_back2', matchDatas && matchDatas.match_tied && matchDatas.match_tied.t2_back ? matchDatas.match_tied.t2_back : '')
-                setValue('mt_odd_lay2', matchDatas && matchDatas.match_tied && matchDatas.match_tied.t2_lay ? matchDatas.match_tied.t2_lay : '')
-
-                setValue('commentary_api', matchDatas && matchDatas.commentary_api ? true : false)
-                setValue('match_odds_api', matchDatas && matchDatas.match_odds_api ? true : false)
-                setValue('session_api', matchDatas && matchDatas.session_api ? true : false)
-                setValue('fancy_api', matchDatas && matchDatas.fancy_api ? true : false)
-                setValue('match_rain_status', matchDatas && matchDatas.match_rain_status ? true : false)   
-                setValue('match_completed_status', matchDatas && matchDatas.match_completed && matchDatas.match_completed.status ? true : false)
-                setValue('match_tied_status', matchDatas && matchDatas.match_tied && matchDatas.match_tied.status ? true : false)
-                setValue('scroller', matchDatas && matchDatas.scroller ? matchDatas.scroller : '')
-                setValue('fav_team', matchDatas && matchDatas.fav_team ? matchDatas.fav_team : '')
-                setValue('tips', matchDatas && matchDatas.tips ? matchDatas.tips : '')
-                setFancyInfo(matchDatas && matchDatas.fancy_info ? matchDatas.fancy_info : fancyInfo)
-                setSuspendAll(matchDatas && matchDatas.suspend_all ? matchDatas.suspend_all : '')
-            }
-        });
+                    setValue('match_odd_team_1_text_1', matchDatas && matchDatas.back1_raw ? matchDatas.back1_raw : '')
+                    setValue('match_odd_team_1_text_2', matchDatas && matchDatas.lay1_raw ? matchDatas.lay1_raw : '')
+                    setValue('match_odd_team_2_text_1', matchDatas && matchDatas.back2_raw ? matchDatas.back2_raw : '')
+                    setValue('match_odd_team_2_text_2', matchDatas && matchDatas.lay2_raw ? matchDatas.lay2_raw : '')
+                    setValue('back1', matchDatas && matchDatas.back1 ? matchDatas.back1 : '')
+                    setValue('lay1', matchDatas && matchDatas.lay1 ? matchDatas.lay1 : '')
+                    setValue('back2', matchDatas && matchDatas.back2 ? matchDatas.back2 : '')
+                    setValue('lay2', matchDatas && matchDatas.lay2 ? matchDatas.lay2 : '')
+    
+                    setValue('match_com_odd_team_1_text_1', matchDatas && matchDatas.mc_back1_raw ? matchDatas.mc_back1_raw : '')
+                    setValue('match_com_odd_team_1_text_2', matchDatas && matchDatas.mc_lay1_raw ? matchDatas.mc_lay1_raw : '')
+                    setValue('match_com_odd_team_2_text_1', matchDatas && matchDatas.mc_back2_raw ? matchDatas.mc_back2_raw : '')
+                    setValue('match_com_odd_team_2_text_2', matchDatas && matchDatas.mc_lay2_raw ? matchDatas.mc_lay2_raw : '')
+                    setValue('mc_odd_back1', matchDatas && matchDatas.match_completed && matchDatas.match_completed.t1_back ? matchDatas.match_completed.t1_back : '')
+                    setValue('mc_odd_lay1', matchDatas && matchDatas.match_completed && matchDatas.match_completed.t1_lay ? matchDatas.match_completed.t1_lay : '')
+                    setValue('mc_odd_back2', matchDatas &&  matchDatas.match_completed && matchDatas.match_completed.t2_back ? matchDatas.match_completed.t2_back : '')
+                    setValue('mc_odd_lay2', matchDatas &&  matchDatas.match_completed && matchDatas.match_completed.t2_lay ? matchDatas.match_completed.t2_lay : '')
+    
+                    setValue('match_tied_odd_team_1_text_1', matchDatas && matchDatas.mt_back1_raw ? matchDatas.mt_back1_raw : '')
+                    setValue('match_tied_odd_team_1_text_2', matchDatas && matchDatas.mt_lay1_raw ? matchDatas.mt_lay1_raw : '')
+                    setValue('match_tied_odd_team_2_text_1', matchDatas && matchDatas.mt_back2_raw ? matchDatas.mt_back2_raw : '')
+                    setValue('match_tied_odd_team_2_text_2', matchDatas && matchDatas.mt_lay2_raw ? matchDatas.mt_lay2_raw : '')
+                    setValue('mt_odd_back1', matchDatas && matchDatas.match_tied && matchDatas.match_tied.t1_back ? matchDatas.match_tied.t1_back : '')
+                    setValue('mt_odd_lay1', matchDatas && matchDatas.match_tied && matchDatas.match_tied.t1_lay ? matchDatas.match_tied.t1_lay : '')
+                    setValue('mt_odd_back2', matchDatas && matchDatas.match_tied && matchDatas.match_tied.t2_back ? matchDatas.match_tied.t2_back : '')
+                    setValue('mt_odd_lay2', matchDatas && matchDatas.match_tied && matchDatas.match_tied.t2_lay ? matchDatas.match_tied.t2_lay : '')
+    
+                    setValue('commentary_api', matchDatas && matchDatas.commentary_api ? true : false)
+                    setValue('match_odds_api', matchDatas && matchDatas.match_odds_api ? true : false)
+                    setValue('session_api', matchDatas && matchDatas.session_api ? true : false)
+                    setValue('fancy_api', matchDatas && matchDatas.fancy_api ? true : false)
+                    setValue('match_rain_status', matchDatas && matchDatas.match_rain_status ? true : false)   
+                    setValue('match_completed_status', matchDatas && matchDatas.match_completed && matchDatas.match_completed.status ? true : false)
+                    setValue('match_tied_status', matchDatas && matchDatas.match_tied && matchDatas.match_tied.status ? true : false)
+                    setValue('scroller', matchDatas && matchDatas.scroller ? matchDatas.scroller : '')
+                    setValue('fav_team', matchDatas && matchDatas.fav_team ? matchDatas.fav_team : '')
+                    setValue('tips', matchDatas && matchDatas.tips ? matchDatas.tips : '')
+                    setFancyInfo(matchDatas && matchDatas.fancy_info ? matchDatas.fancy_info : fancyInfo)
+                    setSuspendAll(matchDatas && matchDatas.suspend_all ? matchDatas.suspend_all : '')
+                }
+            });
+        } catch (error) {
+            console.error("Error : ", error);
+        }
     }, []);
     
     const setAddBreak = async (value) => {
