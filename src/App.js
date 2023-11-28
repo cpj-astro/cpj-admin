@@ -46,7 +46,7 @@ export default function App() {
               <Route path="/upcoming-matches" element={<UpcomingMatches/>} />
               <Route path="/recent-matches" element={<RecentMatches/>} />
               <Route path="/live-match-control/:id" element={<LiveMatchControl/>} />
-              <Route path="/add-match-astrology/:id" element={<AddMatchAstrology/>} />
+              <Route path="/add-match-astrology/:id/:matchName" element={<AddMatchAstrology/>} />
               
               {/* Series Routes */}
               <Route path="/series-list" element={<SeriesList/>} />

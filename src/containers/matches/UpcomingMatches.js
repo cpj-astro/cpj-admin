@@ -180,8 +180,8 @@ export default function UpcomingMatches() {
                                         <th>Match No.</th>
                                         <th>Series</th>
                                         <th>Move To</th>
-                                        <th>Add Astrology</th>
-                                        <th>Action</th>
+                                        <th className="text-center">Manage Astrology</th>
+                                        <th className="text-center">Edit Match</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -193,16 +193,20 @@ export default function UpcomingMatches() {
                                             <td> {match.match_id ? match.match_id : 'N/A'} </td>
                                             <td> {match.series_name ? match.series_name : 'N/A'} </td>
                                             <td> <span className='text-primary text-bold cursor-pointer' onClick={()=>{sendToLive(match.match_id, 'live')}}>Live</span> | <span className='text-primary text-bold cursor-pointer' onClick={()=>{sendToRecent(match.match_id, 'recent')}}>Recent</span> </td>
-                                            <td> <a  className='btn btn-primary p-0 px-2' href={`/add-match-astrology/${match.match_id}`} >Add Astrology</a> </td>
-                                            <td> 
-                                                <Link to={`/edit-match/${match.match_id}`} title="Edit" type="button">
+                                            <td className='text-center'> 
+                                                <Link to={`/add-match-astrology/${match.match_id}/${match.team_a + ' VS ' + match.team_b}`}>
+                                                    <i className='fa fa-eye'></i>
+                                                </Link> 
+                                            </td>
+                                            <td className='text-center'> 
+                                                <Link to={`/edit-match/${match.match_id}`}>
                                                     <i class="fa fa-edit"></i>
                                                 </Link>
                                             </td>
                                         </tr>
                                     )) : 
                                         <tr>
-                                            <td colSpan={7}>
+                                            <td colSpan={8}>
                                                 No Upcoming Matches
                                             </td>
                                         </tr>
@@ -216,8 +220,8 @@ export default function UpcomingMatches() {
                                         <th>Match No.</th>
                                         <th>Series</th>
                                         <th>Move To</th>
-                                        <th>Add Astrology</th>
-                                        <th>Action</th>
+                                        <th className="text-center">Manage Astrology</th>
+                                        <th className="text-center">Edit Match</th>
                                     </tr>
                                 </tfoot>
                             </table>

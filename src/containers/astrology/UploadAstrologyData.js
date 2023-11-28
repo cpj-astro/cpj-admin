@@ -144,7 +144,7 @@ export default function UploadAstrologyData() {
     
     useEffect(() => {
         fetchPanditsData();
-    },[]) 
+    },[]); 
     return (
         <>
         <Header />

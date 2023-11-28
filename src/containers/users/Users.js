@@ -7,38 +7,50 @@ import { Button } from 'react-bootstrap';
 import Header from '../../components/header';
 import SideNav from '../../components/side-nav';
 import Footer from '../../components/footer';
+import Kundli from '../../components/Kundli';
 
 export default function Users() {
     const [usersData, setUsersData] = useState([]);
     const [show, setShow] = useState(false);
     const [planetaryData, setPlanetaryData] = useState([]);
 
-    useEffect(() => {
-        var accessToken = localStorage.getItem('auth_token');
-        const apiConfig = {
-            headers: {
-                Authorization: "Bearer " + accessToken,
-                'Content-Type': 'application/json',
-            }
-        };
-        axios.get(process.env.REACT_APP_DEV === 'true' ? `${process.env.REACT_APP_DEV_API_URL}/users` : `${process.env.REACT_APP_LOCAL_API_URL}/users`, apiConfig)
-        .then((response) => {
-            if(response.data.success){
-                console.log(response.data.data);
-                setUsersData(response.data.data);
-            }
-        }).catch((error) => {
-            toast.error(error.code);
-        });
-    },[]);
+    var accessToken = localStorage.getItem('auth_token');
+    const apiConfig = {
+        headers: {
+            Authorization: "Bearer " + accessToken,
+            'Content-Type': 'application/json',
+        }
+    };
 
-    const handleClose = () => setShow(false);
-  
-    const handleShow = (data) => {
-        console.log('kundli', data);
-        setPlanetaryData(data);
-        setShow(true);
+    const fetchUsers = () => {
+        try {
+            axios.get(process.env.REACT_APP_DEV === 'true' ? `${process.env.REACT_APP_DEV_API_URL}/users` : `${process.env.REACT_APP_LOCAL_API_URL}/users`, apiConfig)
+            .then((response) => {
+                if(response.data.success){
+                    console.log(response.data.data);
+                    setUsersData(response.data.data);
+                }
+            }).catch((error) => {
+                toast.error(error.code);
+            });
+        } catch (error) {
+            console.log(error);   
+        }
     }
+    
+    const handleClose = () => setShow(false);
+    
+    const handleShow = (data) => {
+        if(data.length > 0) {
+            setPlanetaryData(data);
+            setShow(true);
+        }
+        return false;
+    }
+    
+    useEffect(() => {
+        fetchUsers();
+    },[]);
     return (
         <>
             <Header/>
@@ -49,7 +61,7 @@ export default function Users() {
                     </Modal.Header>
                     <Modal.Body>
                         <div className="astrology-chart">
-                            <PlanetaryHouses houses={planetaryData} />
+                            <Kundli housesData={planetaryData}/>
                         </div>
                     </Modal.Body>
                     <Modal.Footer>
@@ -109,9 +121,10 @@ export default function Users() {
                                             <td> {user.latitude ? user.latitude : 'N/A'} </td>
                                             <td> {user.longitude ? user.longitude : 'N/A'} </td>
                                             <td> 
+                                                {user && user.kundli_data.length > 0 ? (
                                                 <span onClick={()=>handleShow(user.kundli_data)}>
                                                     <span className='badge badge-primary w-100 cursor-pointer'><i class="fa fa-eye"></i></span>
-                                                </span>
+                                                </span>) : 'No Data'}
                                             </td>
                                             <td> {user.status == 1 ? <span className='badge badge-success w-100'>Active</span> : <span className='badge badge-danger w-100'>In-Active</span>} </td>
                                         </tr>

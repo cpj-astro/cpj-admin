@@ -11,6 +11,7 @@ import Modal from 'react-bootstrap/Modal';
 import Header from '../../components/header';
 import SideNav from '../../components/side-nav';
 import Footer from '../../components/footer';
+import Kundli from '../../components/Kundli';
 
 export default function PlayersList() {
     const [players, setPlayers] = useState([])
@@ -93,7 +94,7 @@ export default function PlayersList() {
                     </Modal.Header>
                     <Modal.Body>
                         <div className="astrology-chart">
-                            <PlanetaryHouses houses={planetaryData} />
+                            <Kundli housesData={planetaryData}/>
                         </div>
                     </Modal.Body>
                     <Modal.Footer>

@@ -4,7 +4,6 @@ import SideNav from '../../components/side-nav';
 import Footer from '../../components/footer';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import * as XLSX from 'xlsx';
 import Modal from 'react-bootstrap/Modal';
 import { Button, Table } from 'react-bootstrap';
 

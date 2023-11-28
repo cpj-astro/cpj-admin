@@ -4,12 +4,22 @@ import { db } from '../../auth-files/fbaseconfig';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Modal from 'react-bootstrap/Modal';
 import Header from '../../components/header';
 import SideNav from '../../components/side-nav';
 import Footer from '../../components/footer';
+import { Button } from 'react-bootstrap';
+import Kundli from '../../components/Kundli';
 
 export default function LiveMatches() {
     const [matchesData, setMatchesData] = useState([]);
+    const [show, setShow] = useState(false);
+    const [planetaryData, setPlanetaryData] = useState([]);
+    const handleClose = () => setShow(false);
+    const handleShow = (data) => {
+        setPlanetaryData(data);
+        setShow(true);
+    }
     var accessToken = localStorage.getItem('auth_token');
     const apiConfig = {
         headers: {
@@ -65,9 +75,32 @@ export default function LiveMatches() {
         });
     }    
 
+    const createMatchKundli = (data) => {
+        axios.post(process.env.REACT_APP_DEV === 'true' ? `${process.env.REACT_APP_DEV_API_URL}/saveMatchKundli` : `${process.env.REACT_APP_LOCAL_API_URL}/saveMatchKundli`, data, apiConfig)
+        .then((response) => {
+            if(response.data.success){
+                fetchLiveList();
+            }
+        }).catch((error) => {
+            console.log("createMatchKundli", error)
+        });
+    }
     return (
         <>
             <Header/>
+            <Modal size="lg" show={show} onHide={handleClose}>
+                <Modal.Header>
+                    <Modal.Title>Kundli Detail</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className="astrology-chart">
+                        <Kundli housesData={planetaryData}/>
+                    </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>Close</Button>
+                </Modal.Footer>
+            </Modal>
             <div className="content-wrapper">
                 {/* Content Header (Page header) */}
                 <section className="content-header">
@@ -106,6 +139,7 @@ export default function LiveMatches() {
                                         <th>Match Name.</th>
                                         <th>Series</th>
                                         <th>Move To</th>
+                                        <th className='text-center'>Create Kundli</th>
                                         <th className='text-center'>Action</th>
                                     </tr>
                                 </thead>
@@ -117,7 +151,19 @@ export default function LiveMatches() {
                                             <td> {match.match_id} </td>
                                             <td> {match.matchs} </td>
                                             <td> {match.series_name} </td>
-                                            <td> <span className='text-primary text-bold cursor-pointer' onClick={()=>{sendToUpcoming(match.match_id, 'upcoming')}}>Upcoming</span> | <span className='text-primary text-bold cursor-pointer' onClick={()=>{sendToRecent(match.match_id, 'recent')}}>Recent</span> </td>
+                                            <td> 
+                                                <span className='text-primary text-bold cursor-pointer' onClick={()=>{sendToUpcoming(match.match_id, 'upcoming')}}>Upcoming</span> | <span className='text-primary text-bold cursor-pointer' onClick={()=>{sendToRecent(match.match_id, 'recent')}}>Recent</span> 
+                                            </td>
+                                            <td className='text-center'> 
+                                            {
+                                                match && match.kundli_data ?
+                                                    <span className='text-primary text-bold cursor-pointer' onClick={()=>handleShow(match.kundli_data)}><i className='fa fa-eye'></i></span>
+                                                :
+                                                    <span className='text-primary text-bold cursor-pointer' onClick={()=>{createMatchKundli(match)}}>
+                                                        <i className='fa fa-plus-square'></i>
+                                                    </span>
+                                            }
+                                            </td>
                                             <td className='text-center'> 
                                                 <Link to={`/live-match-control/${match.match_id}`} title="Edit" type="button">
                                                     <i class="fa fa-eye"></i>
@@ -140,6 +186,7 @@ export default function LiveMatches() {
                                         <th>Match Name.</th>
                                         <th>Series</th>
                                         <th>Move To</th>
+                                        <th className='text-center'>Create Kundli</th>
                                         <th className='text-center'>Action</th>
                                     </tr>
                                 </tfoot>
