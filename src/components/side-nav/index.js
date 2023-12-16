@@ -109,15 +109,16 @@ export default function SideNav() {
                     </li>
                     <li className="nav-header">ADS</li>
                     <li className="nav-item">
-                        <a href={`${process.env.REACT_APP_PUBLIC_URL}/create-ad`} className="nav-link">
+                        <a href={`${process.env.REACT_APP_PUBLIC_URL}/manage-ads`} className="nav-link">
                             <i className="fas fa-circle nav-icon text-secondary" />
-                            <p>Create Ad</p>
+                            <p>Manage Ads</p>
                         </a>
                     </li>
+                    <li className="nav-header">Reviews</li>
                     <li className="nav-item">
-                        <a href={`${process.env.REACT_APP_PUBLIC_URL}/ads-list`} className="nav-link">
+                        <a href={`${process.env.REACT_APP_PUBLIC_URL}/manage-reviews`} className="nav-link">
                             <i className="fas fa-circle nav-icon text-secondary" />
-                            <p>Ads List</p>
+                            <p>Manage Reviews</p>
                         </a>
                     </li>
                     <li className="nav-header">CUPRATES</li>

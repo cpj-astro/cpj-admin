@@ -28,6 +28,8 @@ import CreateKundli from './containers/kundlis/CreateKundli';
 import UploadAstrologyData from './containers/astrology/UploadAstrologyData';
 import ViewAstrologyData from './containers/astrology/ViewAstrologyData';
 import AddMatchAstrology from './containers/matches/AddMatchAstrology';
+import ManageAds from './containers/privateads/ManageAds';
+import ManageReviews from './containers/reviews/ManageReviews';
 
 export default function App() {
   return (
@@ -73,11 +75,17 @@ export default function App() {
               {/* Astrology Routes */}
               <Route path="/upload-astrology-data" element={<UploadAstrologyData/>} />
               <Route path="/view-astrology-data" element={<ViewAstrologyData/>} />
+
+              {/* Ads Routes */}
+              <Route path="/manage-ads" element={<ManageAds/>} />
+
+              {/* Reviews Routes */}
+              <Route path="/manage-reviews" element={<ManageReviews/>} />
             </Route>
             <Route path='/login' element={<SignIn/>}/>
           </Routes>
         </Fragment>
-      <ToastContainer />
+        <ToastContainer />
       </Router>
     </div>
   )

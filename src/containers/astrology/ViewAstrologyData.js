@@ -197,126 +197,126 @@ export default function ViewAstrologyData() {
               </Modal.Footer>
           </Modal>
           <section className="content-header">
-          <div className="container-fluid">
-              <div className="row mb-2">
-              <div className="col-sm-6">
-                  <h1>View Astrology Data</h1>
-              </div>
-              <div className="col-sm-6">
-                  <ol className="breadcrumb float-sm-right">
-                  <li className="breadcrumb-item"><a href={`${process.env.REACT_APP_PUBLIC_URL}/`}>Dashboard</a></li>
-                  <li className="breadcrumb-item active">View Astrology Data</li>
-                  </ol>
-              </div>
-              </div>
-          </div>
+            <div className="container-fluid">
+                <div className="row mb-2">
+                <div className="col-sm-6">
+                    <h1>View Astrology Data</h1>
+                </div>
+                <div className="col-sm-6">
+                    <ol className="breadcrumb float-sm-right">
+                    <li className="breadcrumb-item"><a href={`${process.env.REACT_APP_PUBLIC_URL}/`}>Dashboard</a></li>
+                    <li className="breadcrumb-item active">View Astrology Data</li>
+                    </ol>
+                </div>
+                </div>
+            </div>
           </section>
           <section className="content">
-          <div className="container-fluid">
-              <div className="row">
-              <div className="col-md-12">
-                  <div className='card card-secondary'>
-                  <div className="card-header">
-                      <h3 className="card-title">View Astrology Data</h3>
-                      <span className="download-template-btn" role="button">
-                          Selected Pandit : {selectedPanditName}
-                      </span>
-                  </div>
-                  <div className='card-body'>
-                      <div className='row'>
-                          {loader ?
-                          <div className='w-100 text-center'>
-                              <i className='fa fa-spinner fa-spin'></i>
-                          </div> :
-                          <div className='col-md-12'>
-                              <form className="form-group" onSubmit={handleFileSubmit}>
-                                  <div className='row'>
-                                      <div className='col-md-3'>
-                                          <select className="form-control" required onChange={(e)=>{selectPandit(e)}}>
-                                            <option value={null}>--- Select Pandit ---</option>
-                                            {(pandits && pandits.length > 0) ? pandits.map((pandit, index) => (
-                                            <option value={pandit.id}>{pandit.name ? pandit.name : 'N/A'}</option>
+            <div className="container-fluid">
+                <div className="row">
+                <div className="col-md-12">
+                    <div className='card card-secondary'>
+                    <div className="card-header">
+                        <h3 className="card-title">View Astrology Data</h3>
+                        <span className="download-template-btn" role="button">
+                            Selected Pandit : {selectedPanditName}
+                        </span>
+                    </div>
+                    <div className='card-body'>
+                        <div className='row'>
+                            {loader ?
+                            <div className='w-100 text-center'>
+                                <i className='fa fa-spinner fa-spin'></i>
+                            </div> :
+                            <div className='col-md-12'>
+                                <form className="form-group" onSubmit={handleFileSubmit}>
+                                    <div className='row'>
+                                        <div className='col-md-3'>
+                                            <select className="form-control" required onChange={(e)=>{selectPandit(e)}}>
+                                                <option value={null}>--- Select Pandit ---</option>
+                                                {(pandits && pandits.length > 0) ? pandits.map((pandit, index) => (
+                                                <option value={pandit.id}>{pandit.name ? pandit.name : 'N/A'}</option>
+                                                )) : 
+                                                <option value={null}>No Astrologers</option>
+                                                }   
+                                            </select>
+                                        </div>
+                                        <div className='col-md-3'>
+                                            <select className='form-control' required onChange={(e)=>{selectMonth(e)}}>
+                                            <option value={null}>--- Select Month ---</option>
+                                            {(months && months.length > 0) ? months.map((month, index) => (
+                                            <option value={month}>{month ? month: 'N/A'}</option>
                                             )) : 
-                                            <option value={null}>No Astrologers</option>
+                                            <option value={null}>No Months</option>
                                             }   
-                                          </select>
-                                      </div>
-                                      <div className='col-md-3'>
-                                        <select className='form-control' required onChange={(e)=>{selectMonth(e)}}>
-                                          <option value={null}>--- Select Month ---</option>
-                                          {(months && months.length > 0) ? months.map((month, index) => (
-                                          <option value={month}>{month ? month: 'N/A'}</option>
-                                          )) : 
-                                          <option value={null}>No Months</option>
-                                          }   
-                                        </select>
-                                      </div>
-                                      <div className='col-md-3'>
-                                        <select className='form-control' required onChange={(e)=>{selectYear(e)}}>
-                                          <option value={null}>--- Select Year ---</option>
-                                          {(years && years.length > 0) ? years.map((year, index) => (
-                                          <option value={year}>{year ? year: 'N/A'}</option>
-                                          )) : 
-                                          <option value={null}>No Years</option>
-                                          }   
-                                        </select>
-                                      </div>
-                                      <div className='col-md-3 set-btns'>
-                                          {excelData ? (<>
-                                            <button type="button" className="btn btn-primary w-100" style={{marginRight: '10px'}} onClick={uploadExcel}>Submit</button>
-                                            <span className="btn btn-danger w-100" onClick={clearData}>Clear</span>
-                                          </>)
-                                          : <button type="submit" className="btn btn-primary w-100"><i className='fa fa-file-excel'></i>&nbsp;Load Data</button>}
-                                      </div>
-                                  </div>
-                              </form>
-                              {excelData ? (
-                              <Table responsive className='table table-bordered table-striped'>
-                                  <thead>
-                                  <tr>
-                                      {Object.keys(excelData[0]).map((key) => (
-                                      <th key={key}>{key}</th>
-                                      ))}
-                                  </tr>
-                                  </thead>
-                                  <tbody>
-                                  {excelData.map((individualExcelData, rowIndex) => (
-                                      <tr key={rowIndex}>
-                                      {Object.keys(individualExcelData).map((key, columnIndex) => (
-                                          <td key={key}>
-                                          <span
-                                            title={individualExcelData[key]}
-                                            style={{ cursor: 'pointer' }}
-                                            onClick={() => {
-                                              if (columnIndex !== 0) {
-                                                  openModal(rowIndex, columnIndex, individualExcelData[key]);
-                                              }
-                                            }}
-                                          >
-                                              {individualExcelData[key].length > 20 ? (
-                                              individualExcelData[key].substring(0, 20) + '...'
-                                              ) : (
-                                                  individualExcelData[key]
-                                              )}
-                                          </span>
-                                          </td>
-                                      ))}
-                                      </tr>
-                                  ))}
-                                  </tbody>
-                              </Table>
-                              ) : (
-                              <div className="viewer">
-                                  No Records to show!
-                              </div>
-                              )}
-                          </div>}
-                      </div>
-                  </div>
-                  </div>
-              </div>
-              </div>
-          </div>
+                                            </select>
+                                        </div>
+                                        <div className='col-md-3'>
+                                            <select className='form-control' required onChange={(e)=>{selectYear(e)}}>
+                                            <option value={null}>--- Select Year ---</option>
+                                            {(years && years.length > 0) ? years.map((year, index) => (
+                                            <option value={year}>{year ? year: 'N/A'}</option>
+                                            )) : 
+                                            <option value={null}>No Years</option>
+                                            }   
+                                            </select>
+                                        </div>
+                                        <div className='col-md-3 set-btns'>
+                                            {excelData ? (<>
+                                                <button type="button" className="btn btn-primary w-100" style={{marginRight: '10px'}} onClick={uploadExcel}>Submit</button>
+                                                <span className="btn btn-danger w-100" onClick={clearData}>Clear</span>
+                                            </>)
+                                            : <button type="submit" className="btn btn-primary w-100"><i className='fa fa-file-excel'></i>&nbsp;Load Data</button>}
+                                        </div>
+                                    </div>
+                                </form>
+                                {excelData ? (
+                                <Table responsive className='table table-bordered table-striped'>
+                                    <thead>
+                                    <tr>
+                                        {Object.keys(excelData[0]).map((key) => (
+                                        <th key={key}>{key}</th>
+                                        ))}
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {excelData.map((individualExcelData, rowIndex) => (
+                                        <tr key={rowIndex}>
+                                        {Object.keys(individualExcelData).map((key, columnIndex) => (
+                                            <td key={key}>
+                                            <span
+                                                title={individualExcelData[key]}
+                                                style={{ cursor: 'pointer' }}
+                                                onClick={() => {
+                                                if (columnIndex !== 0) {
+                                                    openModal(rowIndex, columnIndex, individualExcelData[key]);
+                                                }
+                                                }}
+                                            >
+                                                {individualExcelData[key].length > 20 ? (
+                                                individualExcelData[key].substring(0, 20) + '...'
+                                                ) : (
+                                                    individualExcelData[key]
+                                                )}
+                                            </span>
+                                            </td>
+                                        ))}
+                                        </tr>
+                                    ))}
+                                    </tbody>
+                                </Table>
+                                ) : (
+                                <div className="viewer">
+                                    No Records to show!
+                                </div>
+                                )}
+                            </div>}
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
           </section>
       </div>
       <SideNav />

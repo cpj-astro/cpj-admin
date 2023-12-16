@@ -115,7 +115,6 @@ export default function UpcomingMatches() {
                 }
                 console.log("sendToLive", match)
                 setDoc(doc(db, "matchdata", String(response.data.data.match_id)), response.data.data, {merge: true});
-                setMatchesData(response.data.data);
                 fetchUpcomingList();
             }
         }).catch((error) => {
@@ -131,7 +130,21 @@ export default function UpcomingMatches() {
         axios.post(process.env.REACT_APP_DEV === 'true' ? `${process.env.REACT_APP_DEV_API_URL}/updateMatch` : `${process.env.REACT_APP_LOCAL_API_URL}/updateMatch`, params, apiConfig)
         .then((response) => {
             if(response.data.success){
-                setMatchesData(response.data.data);
+                fetchUpcomingList();
+            }
+        }).catch((error) => {
+            console.log("sentToRecent", error)
+        });
+    }
+
+    const changeAstrologyStatus = (id, status) => {
+        const params = {
+            match_id: id,
+            astrology_status: status
+        }
+        axios.post(process.env.REACT_APP_DEV === 'true' ? `${process.env.REACT_APP_DEV_API_URL}/updateMatchAstroStatus` : `${process.env.REACT_APP_LOCAL_API_URL}/updateMatchAstroStatus`, params, apiConfig)
+        .then((response) => {
+            if(response.data.success){
                 fetchUpcomingList();
             }
         }).catch((error) => {
@@ -180,6 +193,7 @@ export default function UpcomingMatches() {
                                         <th>Match No.</th>
                                         <th>Series</th>
                                         <th>Move To</th>
+                                        <th>Astrology</th>
                                         <th className="text-center">Manage Astrology</th>
                                         <th className="text-center">Edit Match</th>
                                     </tr>
@@ -193,6 +207,16 @@ export default function UpcomingMatches() {
                                             <td> {match.match_id ? match.match_id : 'N/A'} </td>
                                             <td> {match.series_name ? match.series_name : 'N/A'} </td>
                                             <td> <span className='text-primary text-bold cursor-pointer' onClick={()=>{sendToLive(match.match_id, 'live')}}>Live</span> | <span className='text-primary text-bold cursor-pointer' onClick={()=>{sendToRecent(match.match_id, 'recent')}}>Recent</span> </td>
+                                            <td className='text-center'>
+                                                {match.astrology_status === 'enable' ?
+                                                <span className='badge badge-danger text-bold cursor-pointer' onClick={()=>{changeAstrologyStatus(match.match_id, 'disable')}}>
+                                                    Click to Disable
+                                                </span> :
+                                                <span className='badge badge-success text-bold cursor-pointer' onClick={()=>{changeAstrologyStatus(match.match_id, 'enable')}}>
+                                                    Click to Enable
+                                                </span> 
+                                                }
+                                            </td>
                                             <td className='text-center'> 
                                                 <Link to={`/add-match-astrology/${match.match_id}/${match.team_a + ' VS ' + match.team_b}`}>
                                                     <i className='fa fa-eye'></i>
@@ -220,6 +244,7 @@ export default function UpcomingMatches() {
                                         <th>Match No.</th>
                                         <th>Series</th>
                                         <th>Move To</th>
+                                        <th>Astrology</th>
                                         <th className="text-center">Manage Astrology</th>
                                         <th className="text-center">Edit Match</th>
                                     </tr>
