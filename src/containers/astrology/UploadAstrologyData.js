@@ -7,8 +7,10 @@ import axios from 'axios';
 import * as XLSX from 'xlsx';
 import Modal from 'react-bootstrap/Modal';
 import { Button, Table } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 export default function UploadAstrologyData() {
+    const navigate = useNavigate();
     const [loader, setLoader] = useState(false);
     const [excelFile, setExcelFile] = useState(null);
     const [typeError, setTypeError] = useState(null);
@@ -173,11 +175,10 @@ export default function UploadAstrologyData() {
                     <h1>Upload Astrology Data</h1>
                 </div>
                 <div className="col-sm-6">
-                    <ol className="breadcrumb float-sm-right">
-                    <li className="breadcrumb-item"><a href={`${process.env.REACT_APP_PUBLIC_URL}/`}>Dashboard</a></li>
-                    <li className="breadcrumb-item active">Upload Astrology Data</li>
-                    </ol>
-                </div>
+                    <div className="float-sm-right">
+                        <span className='btn btn-primary' onClick={()=>navigate(`/view-astrology-data`)}>View Astrology</span>
+                    </div>
+                    </div>
                 </div>
             </div>
             </section>
@@ -187,7 +188,7 @@ export default function UploadAstrologyData() {
                 <div className="col-md-12">
                     <div className='card card-secondary'>
                     <div className="card-header">
-                        <h3 className="card-title">Manage Astrology Data</h3>
+                        <h3 className="card-title">Upload Astrology Data</h3>
                         <a href={`${process.env.REACT_APP_PUBLIC_URL}/templates/Excel-Template.xlsx`} className="download-template-btn" role="button">
                             <i className='fa fa-download'></i>&nbsp;&nbsp;Download Excel Template
                         </a>

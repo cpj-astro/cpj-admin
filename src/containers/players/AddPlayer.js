@@ -91,10 +91,9 @@ export default function AddPlayer() {
                         <h1>Add Player</h1>
                         </div>
                         <div className="col-sm-6">
-                        <ol className="breadcrumb float-sm-right">
-                            <li className="breadcrumb-item"><a href={`${process.env.REACT_APP_PUBLIC_URL}/`}>Dashboard</a></li>
-                            <li className="breadcrumb-item active">Add Player</li>
-                        </ol>
+                            <div className="float-sm-right">
+                                <span className='btn btn-primary' onClick={()=>navigate(`/players-list`)}>View Players</span>
+                            </div>
                         </div>
                     </div>
                     </div>{/* /.container-fluid */}

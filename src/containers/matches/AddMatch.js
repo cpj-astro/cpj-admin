@@ -30,7 +30,7 @@ export default function AddMatch() {
             apiConfig
         ).then((response) => {
             if(response.data.success){
-                toast.success("Match Created Successfully");
+                toast.success(response.data.msg);
             }
         }).catch((error) => {
             toast.error(error);
@@ -50,15 +50,10 @@ export default function AddMatch() {
             toast.error(error);
         }
     }
-    useEffect(() => {
-        if (formState.isSubmitSuccessful) {
-            reset();
-        }
-    }, [isSubmitSuccessful]);
+    
     useEffect(() => {
         fetchSeriesData();
     },[])  
-
     return (
         <>
             <Header/>

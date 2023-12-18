@@ -36,12 +36,6 @@ export default function SeriesList() {
                         <div className="col-sm-6">
                         <h1>Series List</h1>
                         </div>
-                        <div className="col-sm-6">
-                        <ol className="breadcrumb float-sm-right">
-                            <li className="breadcrumb-item"><a href={`${process.env.REACT_APP_PUBLIC_URL}/`}>Dashboard</a></li>
-                            <li className="breadcrumb-item active">Series List</li>
-                        </ol>
-                        </div>
                     </div>
                     </div>{/* /.container-fluid */}
                 </section>

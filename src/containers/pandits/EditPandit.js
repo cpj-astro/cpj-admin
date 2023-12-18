@@ -86,10 +86,9 @@ export default function EditPandit() {
                         <h1>Edit Pandit</h1>
                         </div>
                         <div className="col-sm-6">
-                        <ol className="breadcrumb float-sm-right">
-                            <li className="breadcrumb-item"><a href={`${process.env.REACT_APP_PUBLIC_URL}/`}>Dashboard</a></li>
-                            <li className="breadcrumb-item active">Edit Pandit</li>
-                        </ol>
+                            <div className="float-sm-right">
+                                <span className='btn btn-primary' onClick={()=>navigate(`/pandits-list`)}>View Pandits</span>
+                            </div>
                         </div>
                     </div>
                     </div>{/* /.container-fluid */}

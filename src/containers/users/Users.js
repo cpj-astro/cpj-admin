@@ -75,12 +75,6 @@ export default function Users() {
                         <div className="col-sm-6">
                         <h1>Users List</h1>
                         </div>
-                        <div className="col-sm-6">
-                        <ol className="breadcrumb float-sm-right">
-                            <li className="breadcrumb-item"><a href={`${process.env.REACT_APP_PUBLIC_URL}/`}>Dashboard</a></li>
-                            <li className="breadcrumb-item active">Users List</li>
-                        </ol>
-                        </div>
                     </div>
                     </div>{/* /.container-fluid */}
                 </section>
@@ -92,7 +86,7 @@ export default function Users() {
                         {/* /.card */}
                         <div className="card">
                             <div className="card-header">
-                            <h3 className="card-title">Series List</h3>
+                            <h3 className="card-title">Users List</h3>
                             </div>
                             {/* /.card-header */}
                             <div className="card-body">
@@ -108,6 +102,7 @@ export default function Users() {
                                             <th>Longitude</th>
                                             <th>Kundli</th>
                                             <th>Status</th>
+                                            <th>Details</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -127,6 +122,10 @@ export default function Users() {
                                                 </span>) : 'No Data'}
                                             </td>
                                             <td> {user.status == 1 ? <span className='badge badge-success w-100'>Active</span> : <span className='badge badge-danger w-100'>In-Active</span>} </td>
+                                            <td> 
+                                                {user && user.id ? (
+                                                <a href={`user-details/${user.id}`} className='badge badge-primary w-100 cursor-pointer'><i class="fa fa-eye"></i></a>) : 'No Data'}
+                                            </td>
                                         </tr>
                                     )) : 
                                         <tr>
@@ -147,6 +146,7 @@ export default function Users() {
                                         <th>Longitude</th>
                                         <th>Kundli</th>
                                         <th>Status</th>
+                                        <th>Details</th>
                                     </tr>
                                 </tfoot>
                             </table>

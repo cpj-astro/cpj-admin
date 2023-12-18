@@ -6,8 +6,10 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import Modal from 'react-bootstrap/Modal';
 import { Button, Table } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 export default function ViewAstrologyData() {
+  const navigate = useNavigate();
   const [loader, setLoader] = useState(false);
   const [excelData, setExcelData] = useState(null);
   const [selectedPandit, setSelectedPandit] = useState(null);
@@ -199,15 +201,14 @@ export default function ViewAstrologyData() {
           <section className="content-header">
             <div className="container-fluid">
                 <div className="row mb-2">
-                <div className="col-sm-6">
-                    <h1>View Astrology Data</h1>
-                </div>
-                <div className="col-sm-6">
-                    <ol className="breadcrumb float-sm-right">
-                    <li className="breadcrumb-item"><a href={`${process.env.REACT_APP_PUBLIC_URL}/`}>Dashboard</a></li>
-                    <li className="breadcrumb-item active">View Astrology Data</li>
-                    </ol>
-                </div>
+                    <div className="col-sm-6">
+                        <h1>View Astrology Data</h1>
+                    </div>
+                    <div className="col-sm-6">
+                        <div className="float-sm-right">
+                            <span className='btn btn-primary' onClick={()=>navigate(`/upload-astrology-data`)}>Upload Astrology</span>
+                        </div>
+                    </div>
                 </div>
             </div>
           </section>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { collection, query, where, getDocs, onSnapshot , doc, updateDoc, setDoc} from "firebase/firestore";
 import { db } from '../../auth-files/fbaseconfig';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import swal from 'sweetalert';
 import Header from '../../components/header';
@@ -10,7 +10,8 @@ import SideNav from '../../components/side-nav';
 import Footer from '../../components/footer';
 
 export default function PanditsList() {
-    const [pandits, setPandits] = useState([])
+    const [pandits, setPandits] = useState([]);
+    const navigate = useNavigate();
     var accessToken = localStorage.getItem('auth_token');
     const apiConfig = {
         headers: {
@@ -82,10 +83,9 @@ export default function PanditsList() {
                         <h1>Pandits</h1>
                         </div>
                         <div className="col-sm-6">
-                        <ol className="breadcrumb float-sm-right">
-                            <li className="breadcrumb-item"><a href={`${process.env.REACT_APP_PUBLIC_URL}/`}>Dashboard</a></li>
-                            <li className="breadcrumb-item active">Pandits</li>
-                        </ol>
+                            <div className="float-sm-right">
+                                <span className='btn btn-primary' onClick={()=>navigate(`/add-pandit`)}>Add Pandit</span>
+                            </div>
                         </div>
                     </div>
                     </div>{/* /.container-fluid */}

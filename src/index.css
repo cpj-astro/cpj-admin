@@ -335,3 +335,9 @@ padding: 0 3px!important;
 .cursor-pointer {
     cursor: pointer;
 }
+
+.display-set {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

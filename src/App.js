@@ -30,6 +30,7 @@ import ViewAstrologyData from './containers/astrology/ViewAstrologyData';
 import AddMatchAstrology from './containers/matches/AddMatchAstrology';
 import ManageAds from './containers/privateads/ManageAds';
 import ManageReviews from './containers/reviews/ManageReviews';
+import UserDetails from './containers/users/UserDetails';
 
 export default function App() {
   return (
@@ -55,6 +56,7 @@ export default function App() {
 
               {/* Users Routes */}
               <Route path="/users-list" element={<Users/>} />
+              <Route path="/user-details/:id" element={<UserDetails/>} />
 
               {/* Pandits Routes */}
               <Route path="/add-pandit" element={<AddPandit/>} />
