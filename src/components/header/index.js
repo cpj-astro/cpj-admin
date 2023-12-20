@@ -33,14 +33,6 @@ export default function Header() {
                             <i className="fas fa-user-circle" />
                         </a>
                         <div className="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                            <a href="/profile" className="dropdown-item">
-                                <i className="fas fa-user mr-2" /> Profile
-                            </a>
-                            <div className="dropdown-divider" />
-                            <a href="/settings" className="dropdown-item">
-                                <i className="fas fa-cog mr-2" /> Settings
-                            </a>
-                            <div className="dropdown-divider" />
                             <span className="dropdown-item cursor-pointer" onClick={logout}>
                                 <i className="fa fa-power-off mr-2" /> Logout
                             </span>
