@@ -88,9 +88,7 @@ export default function SideNav() {
                     </li>
                 </ul>
                 </nav>
-                {/* /.sidebar-menu */}
             </div>
-            {/* /.sidebar */}
         </aside>
     </div>
   )
