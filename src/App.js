@@ -31,6 +31,7 @@ import AddMatchAstrology from './containers/matches/AddMatchAstrology';
 import ManageAds from './containers/privateads/ManageAds';
 import ManageReviews from './containers/reviews/ManageReviews';
 import UserDetails from './containers/users/UserDetails';
+import ManageGameJob from './containers/gamejob/ManageGameJob';
 
 export default function App() {
   return (
@@ -83,6 +84,9 @@ export default function App() {
 
               {/* Reviews Routes */}
               <Route path="/manage-reviews" element={<ManageReviews/>} />
+
+              {/* GameJob Routes */}
+              <Route path="/manage-gamejob" element={<ManageGameJob/>} />
             </Route>
             <Route path='/login' element={<SignIn/>}/>
           </Routes>
