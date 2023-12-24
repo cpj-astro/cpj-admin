@@ -87,6 +87,8 @@ export default function App() {
 
               {/* GameJob Routes */}
               <Route path="/manage-gamejob" element={<ManageGameJob/>} />
+
+              {/* <Route path="/manage-gamejob" element={<Manage/>} /> */}
             </Route>
             <Route path='/login' element={<SignIn/>}/>
           </Routes>

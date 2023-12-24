@@ -92,6 +92,12 @@ export default function SideNav() {
                             <p>Game Job</p>
                         </a>
                     </li>
+                    <li className="nav-item">
+                        <a href={`${process.env.REACT_APP_PUBLIC_URL}/manage-visitors`} className="nav-link">
+                            <i className="fas fa-gamepad nav-icon text-secondary" />
+                            <p>Manage Visitors</p>
+                        </a>
+                    </li>
                 </ul>
                 </nav>
             </div>
