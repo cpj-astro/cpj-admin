@@ -10,7 +10,7 @@ import SideNav from '../../components/side-nav';
 import Header from '../../components/header';
 import { toast } from 'react-toastify';
 
-export default function ManageGameJob() {
+export default function ManageVisitors() {
     var accessToken = localStorage.getItem('auth_token');
     const { register, handleSubmit, setValue, getValues, watch, reset, formState, formState: { isSubmitSuccessful } } = useForm();
     const [gameJobs, setGameJobs] = useState([]);

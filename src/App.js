@@ -32,6 +32,7 @@ import ManageAds from './containers/privateads/ManageAds';
 import ManageReviews from './containers/reviews/ManageReviews';
 import UserDetails from './containers/users/UserDetails';
 import ManageGameJob from './containers/gamejob/ManageGameJob';
+import ManageVisitors from './containers/visitors/ManageVisitors';
 
 export default function App() {
   return (
@@ -88,7 +89,8 @@ export default function App() {
               {/* GameJob Routes */}
               <Route path="/manage-gamejob" element={<ManageGameJob/>} />
 
-              {/* <Route path="/manage-gamejob" element={<Manage/>} /> */}
+              {/* GameJob Routes */}
+              <Route path="/manage-visitors" element={<ManageVisitors/>} />
             </Route>
             <Route path='/login' element={<SignIn/>}/>
           </Routes>

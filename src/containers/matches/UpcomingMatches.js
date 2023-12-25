@@ -113,7 +113,6 @@ export default function UpcomingMatches() {
                     t2_back: '',
                     t2_lay: '',
                 }
-                console.log("sendToLive", match)
                 setDoc(doc(db, "matchdata", String(response.data.data.match_id)), response.data.data, {merge: true});
                 fetchUpcomingList();
             }
