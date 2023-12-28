@@ -194,6 +194,7 @@ export default function UpcomingMatches() {
                                         <th>Move To</th>
                                         <th>Astrology</th>
                                         <th className="text-center">Manage Astrology</th>
+                                        <th className="text-center">Fantacy Teams</th>
                                         <th className="text-center">Edit Match</th>
                                     </tr>
                                 </thead>
@@ -222,6 +223,11 @@ export default function UpcomingMatches() {
                                                 </Link> 
                                             </td>
                                             <td className='text-center'> 
+                                                <Link to={`/manage-teams/${match.match_id}`}>
+                                                    <i className='fa fa-eye'></i>
+                                                </Link> 
+                                            </td>
+                                            <td className='text-center'> 
                                                 <Link to={`/edit-match/${match.match_id}`}>
                                                     <i class="fa fa-edit"></i>
                                                 </Link>
@@ -229,7 +235,7 @@ export default function UpcomingMatches() {
                                         </tr>
                                     )) : 
                                         <tr>
-                                            <td colSpan={8}>
+                                            <td colSpan={10}>
                                                 No Upcoming Matches
                                             </td>
                                         </tr>
@@ -245,6 +251,7 @@ export default function UpcomingMatches() {
                                         <th>Move To</th>
                                         <th>Astrology</th>
                                         <th className="text-center">Manage Astrology</th>
+                                        <th className="text-center">Fantacy Teams</th>
                                         <th className="text-center">Edit Match</th>
                                     </tr>
                                 </tfoot>
