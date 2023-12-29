@@ -23,7 +23,8 @@ export default function ManageTeams() {
   } = useForm();
   const [teams, setTeams] = useState([]);
 
-  const fetchTeamList = () => {
+  const fetchTeamList = (id) => {
+    setValue('match_id', id);
     var accessToken = localStorage.getItem('auth_token');
     const apiConfig = {
       headers: {
@@ -34,8 +35,8 @@ export default function ManageTeams() {
     axios
       .get(
         process.env.REACT_APP_DEV === 'true'
-          ? `${process.env.REACT_APP_DEV_API_URL}/getAllTeams`
-          : `${process.env.REACT_APP_LOCAL_API_URL}/getAllTeams`,
+          ? `${process.env.REACT_APP_DEV_API_URL}/getAllTeams/${id}`
+          : `${process.env.REACT_APP_LOCAL_API_URL}/getAllTeams/${id}`,
         apiConfig
       )
       .then((response) => {
@@ -49,14 +50,13 @@ export default function ManageTeams() {
   };
 
   const onSubmit = async (data) => {
+    data.match_id = id;
     const positions = ['bowler', 'batsman', 'wicket_keeper', 'all_rounder'];
     const positionCount = {};
     
     positions.forEach((position) => {
-      if (data[position] && data[position] in positionCount) {
-        positionCount[data[position]]++;
-      } else if (data[position]) {
-        positionCount[data[position]] = 1;
+      if (Array.isArray(data[position])) {
+        data[position] = data[position].join(', ');
       }
     });
   
@@ -80,7 +80,7 @@ export default function ManageTeams() {
     };
 
     axios
-      .post(
+      .put(
         process.env.REACT_APP_DEV === 'true'
           ? `${process.env.REACT_APP_DEV_API_URL}/team${data.id ? '/' + data.id : ''}`
           : `${process.env.REACT_APP_LOCAL_API_URL}/team${data.id ? '/' + data.id : ''}`,
@@ -89,10 +89,10 @@ export default function ManageTeams() {
       )
       .then((response) => {
         if (response.data.success) {
-          fetchTeamList();
+          fetchTeamList(id);
           toast.success(response.data.msg);
         } else {
-          fetchTeamList();
+          fetchTeamList(id);
           toast.error(response.data.msg);
         }
       })
@@ -101,7 +101,7 @@ export default function ManageTeams() {
       });
   };
 
-  const editTeam = (id) => {
+  const editTeam = (t_id) => {
     const apiConfig = {
       headers: {
         Authorization: 'Bearer ' + accessToken,
@@ -111,8 +111,8 @@ export default function ManageTeams() {
     axios
       .get(
         process.env.REACT_APP_DEV === 'true'
-          ? `${process.env.REACT_APP_DEV_API_URL}/team/${id}`
-          : `${process.env.REACT_APP_LOCAL_API_URL}/team/${id}`,
+          ? `${process.env.REACT_APP_DEV_API_URL}/team/${t_id}`
+          : `${process.env.REACT_APP_LOCAL_API_URL}/team/${t_id}`,
         apiConfig
       )
       .then((response) => {
@@ -141,7 +141,7 @@ export default function ManageTeams() {
           setValue('all_rounder', teamData.all_rounder);
           setValue('status', teamData.status);
           
-          fetchTeamList();
+          fetchTeamList(id);
         } else {
           toast.error(response.data.msg);
         }
@@ -175,10 +175,10 @@ export default function ManageTeams() {
           )
           .then((response) => {
             if (response.data.success) {
-              fetchTeamList();
+              fetchTeamList(id);
               toast.success(response.data.msg);
             } else {
-              fetchTeamList();
+              fetchTeamList(id);
               toast.error(response.data.msg);
             }
           })
@@ -190,7 +190,7 @@ export default function ManageTeams() {
   };
 
   useEffect(() => {
-    fetchTeamList();
+    fetchTeamList(id);
     setValue('match_id', id);
   }, []);
 
@@ -331,7 +331,7 @@ export default function ManageTeams() {
                       <div className="row">
                           <div className="col-md-3">
                               <label className="form-label fw-bold">Batsman:</label>
-                              <select className='form-control' {...register("batsman")} required>   
+                              <select className='form-control' {...register("batsman")} multiple required>   
                                   <option value={1} key='1'>Player 1</option>
                                   <option value={2} key='2'>Player 2</option>
                                   <option value={3} key='3'>Player 3</option>
@@ -347,7 +347,7 @@ export default function ManageTeams() {
                           </div>
                           <div className="col-md-3">
                               <label className="form-label fw-bold">Bowler:</label>
-                              <select className='form-control' {...register("bowler")} required>   
+                              <select className='form-control' {...register("bowler")} multiple required>   
                                   <option value={1} key='1'>Player 1</option>
                                   <option value={2} key='2'>Player 2</option>
                                   <option value={3} key='3'>Player 3</option>
@@ -363,7 +363,7 @@ export default function ManageTeams() {
                           </div>
                           <div className='col-md-3'>
                               <label className="form-label fw-bold">Wicket Keeper:</label>
-                              <select className='form-control' {...register("wicket_keeper")} required>   
+                              <select className='form-control' {...register("wicket_keeper")} multiple required>   
                                   <option value={1} key='1'>Player 1</option>
                                   <option value={2} key='2'>Player 2</option>
                                   <option value={3} key='3'>Player 3</option>
@@ -379,7 +379,7 @@ export default function ManageTeams() {
                           </div>
                           <div className='col-md-3'>
                               <label className="form-label fw-bold">All Rounder:</label>
-                              <select className='form-control' {...register("all_rounder")} required>   
+                              <select className='form-control' {...register("all_rounder")} multiple required>   
                                   <option value={1} key='1'>Player 1</option>
                                   <option value={2} key='2'>Player 2</option>
                                   <option value={3} key='3'>Player 3</option>
@@ -488,7 +488,7 @@ export default function ManageTeams() {
                                 ))
                                 ) : (
                                 <tr>
-                                    <td colSpan={16} className="text-center">
+                                    <td colSpan={20} className="text-center">
                                     No Teams
                                     </td>
                                 </tr>
