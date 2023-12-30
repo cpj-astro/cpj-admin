@@ -95,6 +95,7 @@ export default function App() {
 
               {/* Teams Routes */}
               <Route path="/manage-teams/:id" element={<ManageTeams/>} />
+              <Route path="/manage-teams/:id" element={<ManageTeams/>} />
             </Route>
             <Route path='/login' element={<SignIn/>}/>
           </Routes>

@@ -53,23 +53,33 @@ export default function ManageTeams() {
     data.match_id = id;
     const positions = ['bowler', 'batsman', 'wicket_keeper', 'all_rounder'];
     const positionCount = {};
-    
+
     positions.forEach((position) => {
       if (Array.isArray(data[position])) {
-        data[position] = data[position].join(', ');
+          data[position] = data[position].join(', ');
+
+          // Check for duplicate players in different positions
+          const players = data[position].split(',').map(player => player.trim());
+
+          players.forEach(player => {
+              if (!positionCount[player]) {
+                  positionCount[player] = 1;
+              } else {
+                  positionCount[player]++;
+              }
+          });
       }
     });
-  
+
     let hasDuplicates = false;
     Object.values(positionCount).forEach((count) => {
       if (count > 1) {
-        hasDuplicates = true;
+          hasDuplicates = true;
       }
     });
-  
+
     if (hasDuplicates) {
-      toast.error('Duplicate player positions are not allowed.');
-      return;
+      return toast.error('Duplicate player positions are not allowed.');
     }
 
     const apiConfig = {
@@ -79,27 +89,27 @@ export default function ManageTeams() {
       },
     };
 
-    axios
-      .put(
-        process.env.REACT_APP_DEV === 'true'
-          ? `${process.env.REACT_APP_DEV_API_URL}/team${data.id ? '/' + data.id : ''}`
-          : `${process.env.REACT_APP_LOCAL_API_URL}/team${data.id ? '/' + data.id : ''}`,
-        data,
-        apiConfig
-      )
-      .then((response) => {
-        if (response.data.success) {
-          fetchTeamList(id);
-          toast.success(response.data.msg);
-        } else {
-          fetchTeamList(id);
-          toast.error(response.data.msg);
-        }
-      })
-      .catch((error) => {
-        toast.error(error.code);
-      });
+    axios.put(
+      process.env.REACT_APP_DEV === 'true'
+        ? `${process.env.REACT_APP_DEV_API_URL}/team${data.id ? '/' + data.id : ''}`
+        : `${process.env.REACT_APP_LOCAL_API_URL}/team${data.id ? '/' + data.id : ''}`,
+      data,
+      apiConfig
+    )
+    .then((response) => {
+      if (response.data.success) {
+        fetchTeamList(id);
+        toast.success(response.data.msg);
+      } else {
+        fetchTeamList(id);
+        toast.error(response.data.msg);
+      }
+    })
+    .catch((error) => {
+      toast.error(error.code);
+    });
   };
+
 
   const editTeam = (t_id) => {
     const apiConfig = {

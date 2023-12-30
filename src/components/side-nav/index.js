@@ -92,12 +92,12 @@ export default function SideNav() {
                             <p>Game Zop</p>
                         </a>
                     </li>
-                    {/* <li className="nav-item">
+                    <li className="nav-item">
                         <a href={`${process.env.REACT_APP_PUBLIC_URL}/manage-visitors`} className="nav-link">
-                            <i className="fas fa-gamepad nav-icon text-secondary" />
+                            <i className="fa fa-users nav-icon text-secondary" />
                             <p>Manage Visitors</p>
                         </a>
-                    </li> */}
+                    </li>
                 </ul>
                 </nav>
             </div>
