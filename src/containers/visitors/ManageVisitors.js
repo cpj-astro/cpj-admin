@@ -87,7 +87,7 @@ export default function ManageVisitor() {
     };
 
     axios
-      .get(
+      .put(
         process.env.REACT_APP_DEV === 'true'
           ? `${process.env.REACT_APP_DEV_API_URL}/visitor/${v_id}`
           : `${process.env.REACT_APP_LOCAL_API_URL}/visitor/${v_id}`,
@@ -220,29 +220,17 @@ export default function ManageVisitor() {
                       <th>Max</th>
                       <th>Fake Users</th>
                       <th>Status</th>
-                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                       {/* {visitors && visitors.length > 0 && visitors.map((visitor, index) => ( */}
+                      {visitors && visitors.id && 
                         <tr key={visitors.id}>
-                          <td>{visitors.min ?? 'N/A'}</td>
-                          <td>{visitors.max ?? 'N/A'}</td>
-                          <td>{visitors.fake_users ?? 'N/A'}</td>
-                          <td>{visitors.status ?? 'N/A'}</td>
-                          <td width="100">
-                            <button
-                              className="btn btn-info btn-sm ms-2 text-white"
-                              title="Edit"
-                              type="button"
-                              onClick={() => {
-                                editVisitor(visitors.id);
-                              }}
-                            >
-                              <FiEdit2 />
-                            </button>
-                          </td>
-                        </tr>
+                          <td>{visitors && visitors.min && visitors.min ? visitors.min : 'N/A'}</td>
+                          <td>{visitors && visitors.max ? visitors.max : 'N/A'}</td>
+                          <td>{visitors && visitors.fake_users ? visitors.fake_users : 'N/A'}</td>
+                          <td>{visitors && visitors.status ? visitors.status : 'N/A'}</td>
+                        </tr>}
                       {/* ))} */}
 
                       {/* <tr>
