@@ -223,21 +223,13 @@ export default function ManageVisitor() {
                     </tr>
                   </thead>
                   <tbody>
-                      {/* {visitors && visitors.length > 0 && visitors.map((visitor, index) => ( */}
                       {visitors && visitors.id && 
-                        <tr key={visitors.id}>
-                          <td>{visitors && visitors.min && visitors.min ? visitors.min : 'N/A'}</td>
-                          <td>{visitors && visitors.max ? visitors.max : 'N/A'}</td>
-                          <td>{visitors && visitors.fake_users ? visitors.fake_users : 'N/A'}</td>
-                          <td>{visitors && visitors.status ? visitors.status : 'N/A'}</td>
-                        </tr>}
-                      {/* ))} */}
-
-                      {/* <tr>
-                        <td colSpan={5} className="text-center">
-                          No Visitors
-                        </td>
-                      </tr> */}
+                      <tr key={visitors.id}>
+                        <td>{visitors && visitors.min && visitors.min ? visitors.min : 'N/A'}</td>
+                        <td>{visitors && visitors.max ? visitors.max : 'N/A'}</td>
+                        <td>{visitors && visitors.fake_users ? visitors.fake_users : 'N/A'}</td>
+                        <td>{visitors && visitors.status ? visitors.status : 'N/A'}</td>
+                      </tr>}
                   </tbody>
                 </Table>
               </div>
