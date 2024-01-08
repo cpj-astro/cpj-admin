@@ -230,8 +230,10 @@ export default function LiveMatchControl() {
             onSnapshot(doc(db, "matchdata", id), (doc) => {
                 matchDatas = doc.data();    
                 if(!isObjectEmpty(matchDatas)){
-                    onBatTeam = matchDatas.batting_team
-                    setValue('batting_team', onBatTeam)
+                    if(matchDatas && matchDatas.batting_team) {
+                        onBatTeam = matchDatas.batting_team
+                        setValue('batting_team', onBatTeam)
+                    }
                     // let totalOverBalls = Number(getValues('match_over')) * 6
                     // if(onBatTeam == matchDatas.team_a_id) {
                     //     let teamAScore = matchDatas.team_a_score;
@@ -285,7 +287,7 @@ export default function LiveMatchControl() {
                     // }
                     setValue('first_circle', matchDatas && matchDatas.first_circle ? matchDatas.first_circle : '')
                     setValue('batsman_1', matchDatas && matchDatas.batsman.length > 0 ? matchDatas.batsman[0].name : '')
-                    setSessionValue(matchDatas.session);
+                    setSessionValue(matchDatas && matchDatas.session ? matchDatas.session : '');
                     setValue('batsman_1_balls', matchDatas && matchDatas.batsman.length > 0 ? matchDatas.batsman[0].ball : 0)
                     setValue('batsman_1_runs', matchDatas && matchDatas.batsman.length > 0 ? matchDatas.batsman[0].run : 0)
                     setValue('batsman_1_strike_rate', matchDatas && matchDatas.batsman.length > 0 ? matchDatas.batsman[0].strike_rate : 0)
@@ -850,7 +852,9 @@ export default function LiveMatchControl() {
         setValue('team_runs', Number(getValues('team_runs'))+1)
     }
     const isObjectEmpty = (objectName) => {
-        return Object.keys(objectName).length === 0
+        if(objectName && objectName.length === 0) {
+            return Object.keys(objectName).length === 0
+        }
     }
     const setBowlerReset = () => {
         setValue('bowler', '')

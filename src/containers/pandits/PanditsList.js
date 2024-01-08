@@ -125,7 +125,6 @@ export default function PanditsList() {
                                             <td> {pandit.rating ? pandit.rating : 'N/A'} </td>
                                             <td> {pandit.match_astrology_price ? pandit.match_astrology_price : 'N/A'} </td>
                                             <td> {pandit.description ? pandit.description : 'N/A'} </td>
-                                            {/* <td> <span className='text-primary text-bold cursor-pointer' onClick={()=>{sendToLive(pandit.match_id, 'live')}}>Live</span> | <span className='text-primary text-bold cursor-pointer' onClick={()=>{sendToUpcoming(pandit.match_id, 'upcoming')}}>Recent</span> </td> */}
                                             <td className='text-center'> 
                                                 <Link to={`/edit-pandit/${pandit.id}`} title="Edit" type="button" className='mr-2'>
                                                     <i class="fa fa-edit"></i>

@@ -113,6 +113,7 @@ export default function RecentMatches() {
                     t2_back: '',
                     t2_lay: '',
                 }
+                match.fancy_api = true
                 console.log("sendToLive", match)
                 setDoc(doc(db, "matchdata", String(response.data.data.match_id)), response.data.data, {merge: true});
                 setMatchesData(response.data.data);

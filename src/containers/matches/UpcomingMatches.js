@@ -113,6 +113,7 @@ export default function UpcomingMatches() {
                     t2_back: '',
                     t2_lay: '',
                 }
+                match.fancy_api = true
                 setDoc(doc(db, "matchdata", String(response.data.data.match_id)), response.data.data, {merge: true});
                 fetchUpcomingList();
             }
