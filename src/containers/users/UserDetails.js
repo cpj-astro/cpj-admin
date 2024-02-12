@@ -163,7 +163,8 @@ export default function UserDetails() {
                           <table className="widget-table table table-striped no-border">
                               <thead>
                                   <tr>
-                                      <th scope="col" className="text-12">Payment ID</th>
+                                      <th scope="col" className="text-12">CPJ ID</th>
+                                      <th scope="col" className="text-12">Transaction ID</th>
                                       <th scope="col" className="text-12">Price</th>
                                       <th scope="col" className="text-12">Status</th>
                                       <th scope="col" className="text-12">Match</th>
@@ -178,7 +179,8 @@ export default function UserDetails() {
                               <tbody>
                               {(payments && payments.length > 0) ? payments.map((payment, index) => (
                                   <tr key={index}>
-                                      <td className='text-capitalize'>{payment && payment.razorpay_payment_id}</td>
+                                      <td className='text-capitalize'>{payment && payment.merchant_transaction_id}</td>
+                                      <td className='text-capitalize'>{(payment && payment.transaction_id) ?? 'N/A'}</td>
                                       <td className='text-capitalize'>₹ {payment && payment.amount}</td>
                                       <td className='text-capitalize'><span className='badge badge-success'>Paid</span></td>
                                       <td className='text-capitalize'>{payment && payment.match && payment.match.matchs}</td>

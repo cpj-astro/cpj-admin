@@ -116,7 +116,7 @@ export default function UploadAstrologyData() {
     };
 
     const closeModal = () => {
-        setIsModalOpen(false);
+        setIsModalOpen(false);  
     };
 
     const saveEditedValue = () => {

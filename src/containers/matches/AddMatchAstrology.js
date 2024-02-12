@@ -6,7 +6,8 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import * as XLSX from 'xlsx';
 import Modal from 'react-bootstrap/Modal';
-import { Button, Table } from 'react-bootstrap';
+import Accordion from 'react-bootstrap/Accordion';
+import { Button, Table, Card } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 
 export default function AddMatchAstrology() {
@@ -77,13 +78,16 @@ export default function AddMatchAstrology() {
 
   const uploadExcel = async () => {
     try {
+      console.log('Uploading', JSON.stringify(excelData));
+      if(!selectedPandit) {
+        return toast.error('Please select pandit')
+      }
       setLoader(true);
-  
       if (excelData && excelData.length > 0) {
         const params = {
           pandit_id: selectedPandit ? selectedPandit : null,
           match_id: id ? id : null,
-          astrology_data: [excelData[0]] // Send only the first record
+          astrology_data: JSON.stringify(excelData) // Send only the first record
         };
   
         await axios.post(
@@ -128,17 +132,19 @@ export default function AddMatchAstrology() {
     e.preventDefault();
     if (excelFile !== null) {
       const workbook = XLSX.read(excelFile, { type: 'binary' });
-      const worksheetName = workbook.SheetNames[0];
-      const worksheet = workbook.Sheets[worksheetName];
-      const data = XLSX.utils.sheet_to_json(worksheet);
-      
-      // Get only the first record
-      const firstRecord = data.length > 0 ? [data[0]] : [];
-      
-      setExcelData(firstRecord);
-    } 
+      let allExcelData = [];
+  
+      workbook.SheetNames.forEach(sheetName => {
+        const worksheet = workbook.Sheets[sheetName];
+        const data = XLSX.utils.sheet_to_json(worksheet);
+        allExcelData.push({ sheetName, data });
+      });
+  
+      // Parse the JSON string before setting it in the state
+      setExcelData(allExcelData);
+    }
   };
-
+  
   const openModal = (rowIndex, columnIndex, value) => {
     setSelectedCell({ rowIndex, columnIndex, value });
     setEditedCellValue(value);
@@ -212,6 +218,48 @@ export default function AddMatchAstrology() {
     }
   };  
 
+  const handleCellValueChange = (newValue, rowIndex, columnIndex, sheetIndex) => {
+    setExcelData(prevData => {
+      const updatedData = [...prevData]; // Copy the array of sheets
+      const cellData = updatedData[sheetIndex].data[rowIndex];
+      if (columnIndex === 0) {
+        cellData.key = newValue;
+      } else if (columnIndex === 1) {
+        cellData.value = newValue;
+      }
+  
+      return updatedData; 
+    });
+  };  
+
+  const removeRow = (sheetIndex, rowIndex) => {
+    setExcelData(prevData => {
+      const updatedData = prevData.map((sheet, index) => {
+        if (index === sheetIndex) {
+          return {
+            ...sheet,
+            data: sheet.data.filter((item, idx) => idx !== rowIndex)
+          };
+        }
+        return sheet;
+      });
+      return updatedData;
+    });
+  };
+
+  // Function to add a new row to a specific sheet
+  const addRow = (sheetIndex) => {
+    if (excelData && excelData[sheetIndex] && excelData[sheetIndex].data) {
+      const updatedData = [...excelData];
+      updatedData[sheetIndex].data.push({ key: '', value: '' }); // Add a new row with empty key-value fields to the specific sheet
+      setExcelData(updatedData);
+    }
+  };
+
+  useEffect(() => {
+    console.log(excelData);
+  }, [excelData])
+  
   useEffect(() => {
     fetchPanditsData();
   },[]);
@@ -313,41 +361,57 @@ export default function AddMatchAstrology() {
                                             <div className="alert alert-danger mt-10" role="alert">{typeError}</div>
                                         )}
                                     </form>
-                                    {excelData ? (
-                                    <Table responsive className='table table-bordered table-striped'>
-                                        <thead>
-                                        <tr>
-                                            {Object.keys(excelData[0]).map((key) => (
-                                            <th key={key}>{key}</th>
-                                            ))}
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {excelData.map((individualExcelData, rowIndex) => (
-                                            <tr key={rowIndex}>
-                                            {Object.keys(individualExcelData).map((key, columnIndex) => (
-                                                <td key={key}>
-                                                <span
-                                                    title={individualExcelData[key]}
-                                                    style={{ cursor: 'pointer' }}
-                                                    onClick={() => openModal(rowIndex, columnIndex, individualExcelData[key])}
-                                                >
-                                                    {individualExcelData[key].length > 50 ? (
-                                                    individualExcelData[key].substring(0, 50) + '...'
-                                                    ) : (
-                                                        individualExcelData[key]
-                                                    )}
-                                                </span>
-                                                </td>
-                                            ))}
-                                            </tr>
-                                        ))}
-                                        </tbody>
-                                    </Table>
-                                    ) : (
-                                    <div className="viewer">
-                                        No File is Uploaded Yet!
-                                    </div>
+                                    {excelData && excelData.length > 0 && (
+                                      <div className="accordion-container">
+                                        <Accordion> 
+                                          {excelData.map((sheetData, sheetIndex) => (
+                                            <div key={sheetIndex}>
+                                              <Accordion.Item eventKey={sheetIndex.toString()}>
+                                                <Accordion.Header className='w-100'>
+                                                  <h7 className='text-capitalize text-bold'>{sheetData.sheetName}</h7>
+                                                </Accordion.Header>
+                                                <Accordion.Body>
+                                                  <Table responsive className='table table-bordered table-striped'>
+                                                    <thead>
+                                                      <tr>
+                                                        <th>Keys</th>
+                                                        <th>Values</th>
+                                                        <th>Action</th>
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                      {sheetData.data.map((item, rowIndex) => (
+                                                        <tr key={rowIndex}>
+                                                          <td>
+                                                            <input
+                                                              type="text"
+                                                              className='form-control'
+                                                              value={item.key}
+                                                              onChange={(e) => handleCellValueChange(e.target.value, rowIndex, 0, sheetIndex)}
+                                                            />
+                                                          </td>
+                                                          <td>
+                                                            <input
+                                                              type="text"
+                                                              className='form-control'
+                                                              value={item.value}
+                                                              onChange={(e) => handleCellValueChange(e.target.value, rowIndex, 1, sheetIndex)}
+                                                            />
+                                                          </td>
+                                                          <td>
+                                                            <button className='btn btn-danger' onClick={() => removeRow(sheetIndex, rowIndex)}>Remove</button>
+                                                          </td>
+                                                        </tr>
+                                                      ))}
+                                                    </tbody>
+                                                  </Table>
+                                                  <button className='btn btn-success' onClick={() => addRow(sheetIndex)}>Add Row</button>
+                                                </Accordion.Body>
+                                              </Accordion.Item>
+                                            </div>
+                                          ))}
+                                        </Accordion>
+                                      </div>
                                     )}
                                 </div>}
                             </div>

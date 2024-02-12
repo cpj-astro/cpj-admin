@@ -341,3 +341,32 @@ padding: 0 3px!important;
     align-items: center;
     justify-content: center;
 }
+
+/* Styles for the Accordion container */
+.accordion {
+    width: 100%;
+  }
+  
+  /* Styles for the Accordion headers */
+  .accordion-header {
+    background-color: #f0f0f0;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  /* Styles for the Accordion bodies */
+  .accordion-body {
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+  
+  /* Styles for the Accordion headers when hovered */
+  .accordion-header:hover {
+    background-color: #e0e0e0;
+  }
+  
+  button.accordion-button.collapsed {
+    background: none;
+    border: none;  
+  }
