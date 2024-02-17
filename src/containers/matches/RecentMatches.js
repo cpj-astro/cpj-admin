@@ -181,7 +181,7 @@ export default function RecentMatches() {
                                         <th>Match No.</th>
                                         <th>Series</th>
                                         <th>Move To</th>
-                                        <th>Action</th>
+                                        {/* <th>Action</th> */}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -193,11 +193,11 @@ export default function RecentMatches() {
                                             <td> {match.match_id ? match.match_id : 'N/A'} </td>
                                             <td> {match.series_name ? match.series_name : 'N/A'} </td>
                                             <td> <span className='text-primary text-bold cursor-pointer' onClick={()=>{sendToLive(match.match_id, 'live')}}>Live</span> | <span className='text-primary text-bold cursor-pointer' onClick={()=>{sendToUpcoming(match.match_id, 'upcoming')}}>Recent</span> </td>
-                                            <td> 
+                                            {/* <td> 
                                                 <Link to={`/edit-match/${match.match_id}`} title="Edit" type="button">
                                                     <i class="fa fa-edit"></i>
                                                 </Link>
-                                            </td>
+                                            </td> */}
                                         </tr>
                                     )) : 
                                         <tr>
@@ -215,7 +215,7 @@ export default function RecentMatches() {
                                         <th>Match No.</th>
                                         <th>Series</th>
                                         <th>Move To</th>
-                                        <th>Action</th>
+                                        {/* <th>Action</th> */}
                                     </tr>
                                 </tfoot>
                             </table>

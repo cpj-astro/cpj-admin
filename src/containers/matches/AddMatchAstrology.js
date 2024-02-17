@@ -137,13 +137,26 @@ export default function AddMatchAstrology() {
       workbook.SheetNames.forEach(sheetName => {
         const worksheet = workbook.Sheets[sheetName];
         const data = XLSX.utils.sheet_to_json(worksheet);
-        allExcelData.push({ sheetName, data });
+  
+        // Convert sheetName to lowercase
+        const lowercaseSheetName = sheetName.toLowerCase();
+  
+        // Convert column names to lowercase
+        const lowercaseData = data.map(item => {
+          const lowercaseItem = {};
+          Object.keys(item).forEach(key => {
+            lowercaseItem[key.toLowerCase()] = item[key];
+          });
+          return lowercaseItem;
+        });
+  
+        allExcelData.push({ sheetName: lowercaseSheetName, data: lowercaseData });
       });
   
       // Parse the JSON string before setting it in the state
       setExcelData(allExcelData);
     }
-  };
+  };  
   
   const openModal = (rowIndex, columnIndex, value) => {
     setSelectedCell({ rowIndex, columnIndex, value });
@@ -230,7 +243,7 @@ export default function AddMatchAstrology() {
   
       return updatedData; 
     });
-  };  
+  };   
 
   const removeRow = (sheetIndex, rowIndex) => {
     setExcelData(prevData => {

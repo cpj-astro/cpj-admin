@@ -62,12 +62,12 @@ export default function SideNav() {
                                 <p>Series</p>
                             </a>
                         </li>
-                        <li className="nav-item">
+                        {/* <li className="nav-item">
                             <a href={`${process.env.REACT_APP_PUBLIC_URL}/payments`} className="nav-link">
                                 <i className="fas fa-money-bill nav-icon text-secondary" />
                                 <p>Payments</p>
                             </a>
-                        </li>
+                        </li> */}
                         <li className="nav-item">
                             <a href={`${process.env.REACT_APP_PUBLIC_URL}/manage-ads`} className="nav-link">
                                 <i className="fas fa-file-video nav-icon text-secondary" />

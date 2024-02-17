@@ -196,7 +196,7 @@ export default function UpcomingMatches() {
                                         <th>Astrology</th>
                                         <th className="text-center">Manage Astrology</th>
                                         <th className="text-center">Fantacy Teams</th>
-                                        <th className="text-center">Edit Match</th>
+                                        {/* <th className="text-center">Edit Match</th> */}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -228,11 +228,11 @@ export default function UpcomingMatches() {
                                                     <i className='fa fa-eye'></i>
                                                 </Link> 
                                             </td>
-                                            <td className='text-center'> 
+                                            {/* <td className='text-center'> 
                                                 <Link to={`/edit-match/${match.match_id}`}>
                                                     <i class="fa fa-edit"></i>
                                                 </Link>
-                                            </td>
+                                            </td> */}
                                         </tr>
                                     )) : 
                                         <tr>
@@ -253,7 +253,7 @@ export default function UpcomingMatches() {
                                         <th>Astrology</th>
                                         <th className="text-center">Manage Astrology</th>
                                         <th className="text-center">Fantacy Teams</th>
-                                        <th className="text-center">Edit Match</th>
+                                        {/* <th className="text-center">Edit Match</th> */}
                                     </tr>
                                 </tfoot>
                             </table>
