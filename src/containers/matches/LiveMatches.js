@@ -85,6 +85,21 @@ export default function LiveMatches() {
             console.log("createMatchKundli", error)
         });
     }
+
+    const changeAstrologyStatus = (id, status) => {
+        const params = {
+            match_id: id,
+            astrology_status: status
+        }
+        axios.post(process.env.REACT_APP_DEV === 'true' ? `${process.env.REACT_APP_DEV_API_URL}/updateMatchAstroStatus` : `${process.env.REACT_APP_LOCAL_API_URL}/updateMatchAstroStatus`, params, apiConfig)
+        .then((response) => {
+            if(response.data.success){
+                fetchLiveList();
+            }
+        }).catch((error) => {
+            console.log(error)
+        });
+    }
     return (
         <>
             <Header/>
@@ -139,7 +154,10 @@ export default function LiveMatches() {
                                         <th>Match Name.</th>
                                         <th>Series</th>
                                         <th>Move To</th>
-                                        <th className='text-center'>Create Kundli</th>
+                                        <th className='text-center'>Create Kundli</th> 
+                                        <th>Astrology</th>
+                                        <th className="text-center">Manage Astrology</th>
+                                        <th className="text-center">Fantacy Teams</th>
                                         <th className='text-center'>Action</th>
                                     </tr>
                                 </thead>
@@ -163,6 +181,26 @@ export default function LiveMatches() {
                                                         <i className='fa fa-plus-square'></i>
                                                     </span>
                                             }
+                                            </td> 
+                                            <td className='text-center'>
+                                                {match.astrology_status === 'enable' ?
+                                                <span className='badge badge-danger text-bold cursor-pointer' onClick={()=>{changeAstrologyStatus(match.match_id, 'disable')}}>
+                                                    Click to Disable
+                                                </span> :
+                                                <span className='badge badge-success text-bold cursor-pointer' onClick={()=>{changeAstrologyStatus(match.match_id, 'enable')}}>
+                                                    Click to Enable
+                                                </span> 
+                                                }
+                                            </td>
+                                            <td className='text-center'> 
+                                                <Link to={`/add-match-astrology/${match.match_id}/${match.team_a + ' VS ' + match.team_b}`}>
+                                                    <i className='fa fa-eye'></i>
+                                                </Link> 
+                                            </td>
+                                            <td className='text-center'> 
+                                                <Link to={`/manage-teams/${match.match_id}`}>
+                                                    <i className='fa fa-eye'></i>
+                                                </Link> 
                                             </td>
                                             <td className='text-center'> 
                                                 <Link to={`/live-match-control/${match.match_id}`} title="Edit" type="button">
@@ -172,7 +210,7 @@ export default function LiveMatches() {
                                         </tr>
                                     )) : 
                                         <tr>
-                                            <td colSpan={7}>
+                                            <td colSpan={11}>
                                                 No Live Matches
                                             </td>
                                         </tr>
@@ -187,6 +225,9 @@ export default function LiveMatches() {
                                         <th>Series</th>
                                         <th>Move To</th>
                                         <th className='text-center'>Create Kundli</th>
+                                        <th>Astrology</th>
+                                        <th className="text-center">Manage Astrology</th>
+                                        <th className="text-center">Fantacy Teams</th>
                                         <th className='text-center'>Action</th>
                                     </tr>
                                 </tfoot>

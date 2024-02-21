@@ -7,9 +7,19 @@ import swal from 'sweetalert';
 import Header from '../../components/header';
 import SideNav from '../../components/side-nav';
 import Footer from '../../components/footer';
+import Modal from 'react-bootstrap/Modal';
+import { Button } from 'react-bootstrap';
+import Kundli from '../../components/Kundli';
 
 export default function UpcomingMatches() {
     const [matchesData, setMatchesData] = useState([]);
+    const [planetaryData, setPlanetaryData] = useState([]);
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = (data) => {
+        setPlanetaryData(data);
+        setShow(true);
+    }
     var accessToken = localStorage.getItem('auth_token');
     const apiConfig = {
         headers: {
@@ -137,6 +147,17 @@ export default function UpcomingMatches() {
         });
     }
 
+    const createMatchKundli = (data) => {
+        axios.post(process.env.REACT_APP_DEV === 'true' ? `${process.env.REACT_APP_DEV_API_URL}/saveMatchKundli` : `${process.env.REACT_APP_LOCAL_API_URL}/saveMatchKundli`, data, apiConfig)
+        .then((response) => {
+            if(response.data.success){
+                fetchUpcomingList();
+            }
+        }).catch((error) => {
+            console.log(error)
+        });
+    }
+
     const changeAstrologyStatus = (id, status) => {
         const params = {
             match_id: id,
@@ -155,6 +176,19 @@ export default function UpcomingMatches() {
     return (
         <>
             <Header/>
+            <Modal size="lg" show={show} onHide={handleClose}>
+                <Modal.Header>
+                    <Modal.Title>Kundli Detail</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className="astrology-chart">
+                        <Kundli housesData={planetaryData}/>
+                    </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>Close</Button>
+                </Modal.Footer>
+            </Modal>
             <div className="content-wrapper">
                 {/* Content Header (Page header) */}
                 <section className="content-header">
@@ -193,6 +227,7 @@ export default function UpcomingMatches() {
                                         <th>Match No.</th>
                                         <th>Series</th>
                                         <th>Move To</th>
+                                        <th className='text-center'>Create Kundli</th> 
                                         <th>Astrology</th>
                                         <th className="text-center">Manage Astrology</th>
                                         <th className="text-center">Fantacy Teams</th>
@@ -208,6 +243,16 @@ export default function UpcomingMatches() {
                                             <td> {match.match_id ? match.match_id : 'N/A'} </td>
                                             <td> {match.series_name ? match.series_name : 'N/A'} </td>
                                             <td> <span className='text-primary text-bold cursor-pointer' onClick={()=>{sendToLive(match.match_id, 'live')}}>Live</span> | <span className='text-primary text-bold cursor-pointer' onClick={()=>{sendToRecent(match.match_id, 'recent')}}>Recent</span> </td>
+                                            <td className='text-center'> 
+                                            {
+                                                match && match.kundli_data ?
+                                                    <span className='text-primary text-bold cursor-pointer' onClick={()=>handleShow(match.kundli_data)}><i className='fa fa-eye'></i></span>
+                                                :
+                                                    <span className='text-primary text-bold cursor-pointer' onClick={()=>{createMatchKundli(match)}}>
+                                                        <i className='fa fa-plus-square'></i>
+                                                    </span>
+                                            }
+                                            </td> 
                                             <td className='text-center'>
                                                 {match.astrology_status === 'enable' ?
                                                 <span className='badge badge-danger text-bold cursor-pointer' onClick={()=>{changeAstrologyStatus(match.match_id, 'disable')}}>
@@ -236,7 +281,7 @@ export default function UpcomingMatches() {
                                         </tr>
                                     )) : 
                                         <tr>
-                                            <td colSpan={10}>
+                                            <td colSpan={11}>
                                                 No Upcoming Matches
                                             </td>
                                         </tr>
@@ -250,6 +295,7 @@ export default function UpcomingMatches() {
                                         <th>Match No.</th>
                                         <th>Series</th>
                                         <th>Move To</th>
+                                        <th className='text-center'>Create Kundli</th> 
                                         <th>Astrology</th>
                                         <th className="text-center">Manage Astrology</th>
                                         <th className="text-center">Fantacy Teams</th>
