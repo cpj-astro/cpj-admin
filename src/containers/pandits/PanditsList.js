@@ -112,7 +112,7 @@ export default function PanditsList() {
                                         <th>Rating</th>
                                         <th>Match Astrology Price</th>
                                         <th>Description</th>
-                                        <th className="text-center">Action</th>
+                                        <th className="text-center" style={{width: '100px'}}>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -125,7 +125,7 @@ export default function PanditsList() {
                                             <td> {pandit.rating ? pandit.rating : 'N/A'} </td>
                                             <td> {pandit.match_astrology_price ? pandit.match_astrology_price : 'N/A'} </td>
                                             <td> {pandit.description ? pandit.description : 'N/A'} </td>
-                                            <td className='text-center'> 
+                                            <td className='text-center' style={{width: '100px'}}> 
                                                 <Link to={`/edit-pandit/${pandit.id}`} title="Edit" type="button" className='mr-2'>
                                                     <i class="fa fa-edit"></i>
                                                 </Link>
@@ -152,7 +152,7 @@ export default function PanditsList() {
                                         <th>Rating</th>
                                         <th>Match Astrology Price</th>
                                         <th>Description</th>
-                                        <th className="text-center">Action</th>
+                                        <th className="text-center" style={{width: '100px'}}>Action</th>
                                     </tr>
                                 </tfoot>
                             </table>

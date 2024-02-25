@@ -22,8 +22,7 @@ export default function EditPandit() {
         }
     };
     
-    const onSubmit = async (data) => {
-        console.log('Pandit', data);    
+    const onSubmit = async (data) => {  
         const formData = new FormData();
         formData.append("name", data.name);    
         formData.append("experience", data.experience);    
@@ -46,6 +45,7 @@ export default function EditPandit() {
         ).then((response) => {
             if(response.data.success){
                 toast.success("Pandit Updated Successfully");
+                navigate('/pandits-list');
             }
         }).catch((error) => {
             console.log(error);

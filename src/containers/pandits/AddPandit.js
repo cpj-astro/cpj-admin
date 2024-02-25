@@ -20,7 +20,6 @@ export default function AddPandit() {
         }
     };
     const onSubmit = async (data) => {
-        console.log('Pandit', data);    
         const formData = new FormData();
         formData.append("name", data.name);    
         formData.append("experience", data.experience);    
@@ -43,6 +42,7 @@ export default function AddPandit() {
         ).then((response) => {
             if(response.data.success){
                 toast.success("Pandit Created Successfully");
+                navigate('/pandits-list');
             }
         }).catch((error) => {
             console.log(error);
