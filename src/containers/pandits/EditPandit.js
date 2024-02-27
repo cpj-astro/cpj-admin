@@ -55,7 +55,7 @@ export default function EditPandit() {
 
     const fetchPanditDetails = () => {
         axios.get(
-            process.env.REACT_APP_DEV === 'true' ? `${process.env.REACT_APP_DEV_API_URL}/pandits/getPanditById` : `${process.env.REACT_APP_LOCAL_API_URL}/pandits/getPanditById/${id}`,
+            process.env.REACT_APP_DEV === 'true' ? `${process.env.REACT_APP_DEV_API_URL}/pandits/getPanditById/${id}` : `${process.env.REACT_APP_LOCAL_API_URL}/pandits/getPanditById/${id}`,
             apiConfig
         ).then((response) => {
             if(response.data.success){
