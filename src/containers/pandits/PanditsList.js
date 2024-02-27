@@ -82,11 +82,11 @@ export default function PanditsList() {
                         <div className="col-sm-6">
                         <h1>Pandits</h1>
                         </div>
-                        <div className="col-sm-6">
+                        {/* <div className="col-sm-6">
                             <div className="float-sm-right">
                                 <span className='btn btn-primary' onClick={()=>navigate(`/add-pandit`)}>Add Pandit</span>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                     </div>{/* /.container-fluid */}
                 </section>
@@ -129,16 +129,16 @@ export default function PanditsList() {
                                                 <Link to={`/edit-pandit/${pandit.id}`} title="Edit" type="button" className='mr-2'>
                                                     <i class="fa fa-edit"></i>
                                                 </Link>
-                                                |
+                                                {/* |
                                                 <span onClick={() => {deletePandit(pandit.id)}} title="Delete" type="button" className='ml-2 text-danger'>
                                                     <i class="fa fa-trash"></i>
-                                                </span>
+                                                </span> */}
                                             </td>
                                         </tr>
                                     )) : 
                                         <tr>
                                             <td colSpan={7}>
-                                                No Recent Matches
+                                                No Pandits
                                             </td>
                                         </tr>
                                     }

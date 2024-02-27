@@ -34,6 +34,7 @@ import UserDetails from './containers/users/UserDetails';
 import ManageGameJob from './containers/gamejob/ManageGameJob';
 import ManageVisitors from './containers/visitors/ManageVisitors';
 import ManageTeams from './containers/teams/ManageTeams';
+import AskedQuestions from './containers/questions/AskedQuestions';
 
 export default function App() {
   return (
@@ -92,6 +93,9 @@ export default function App() {
 
               {/* Visitors Routes */}
               <Route path="/manage-visitors" element={<ManageVisitors/>} />
+
+              {/* Asked Questions Routes */}
+              <Route path="/asked-questions" element={<AskedQuestions/>} />
 
               {/* Teams Routes */}
               <Route path="/manage-teams/:id" element={<ManageTeams/>} />

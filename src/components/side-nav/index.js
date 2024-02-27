@@ -62,12 +62,6 @@ export default function SideNav() {
                                 <p>Series</p>
                             </a>
                         </li>
-                        {/* <li className="nav-item">
-                            <a href={`${process.env.REACT_APP_PUBLIC_URL}/payments`} className="nav-link">
-                                <i className="fas fa-money-bill nav-icon text-secondary" />
-                                <p>Payments</p>
-                            </a>
-                        </li> */}
                         <li className="nav-item">
                             <a href={`${process.env.REACT_APP_PUBLIC_URL}/manage-ads`} className="nav-link">
                                 <i className="fas fa-file-video nav-icon text-secondary" />
@@ -96,6 +90,12 @@ export default function SideNav() {
                             <a href={`${process.env.REACT_APP_PUBLIC_URL}/manage-visitors`} className="nav-link">
                                 <i className="fa fa-users nav-icon text-secondary" />
                                 <p>Manage Visitors</p>
+                            </a>
+                        </li>
+                        <li className="nav-item">
+                            <a href={`${process.env.REACT_APP_PUBLIC_URL}/asked-questions`} className="nav-link">
+                                <i className="fas fa-question nav-icon text-secondary" />
+                                <p>Asked Questions</p>
                             </a>
                         </li>
                     </ul>
