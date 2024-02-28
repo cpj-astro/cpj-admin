@@ -14,6 +14,8 @@ import Footer from '../../components/footer';
 export default function AskedQuestions() {
     const [questionData, setQuestionData] = useState([]);
     const [questions, setAskedQuestions] = useState([]);
+    const [showAnswer, setShowAnswer] = useState(null);
+    const [showQuestion, setShowQuestion] = useState(null);
     const [answer, setAnswer] = useState(null);
     const navigate = useNavigate();
     const [show, setShow] = useState(false);
@@ -135,6 +137,14 @@ export default function AskedQuestions() {
                             </div>
                             {/* /.card-header */}
                             <div className="card-body">
+                            <div>
+                                <u>Show Question : {showQuestion}</u> <br/>
+                                {showQuestion && <span className='badge badge-primary cursor-pointer' onClick={()=>setShowQuestion(null)}><i class="fa fa-trash"></i>clear</span>}
+                            </div>
+                            <div>
+                                <u>Show Answer : {showAnswer}</u> <br/>
+                                {showAnswer && <span className='badge badge-primary cursor-pointer' onClick={()=>setShowAnswer(null)}><i class="fa fa-trash"></i>clear</span>}
+                            </div>
                             <table id="example4" className="table table-bordered table-striped">
                                 <thead>
                                     <tr>
@@ -154,12 +164,19 @@ export default function AskedQuestions() {
                                                     <i className='fa fa-eye'></i>
                                                 </Link>
                                             </td>
-                                            <td> {question.question ? question.question : 'N/A'} </td>
                                             <td> 
-                                                {question && !question.answer ? (
+                                                {question && question.question && question.question.length > 100 ? <span onClick={()=>setShowQuestion(question.question)}>
+                                                    <span className='badge badge-primary cursor-pointer'><i class="fa fa-eye"></i></span>
+                                                </span> : question.question}
+                                            </td>
+                                            <td> 
+                                                {question && !question.answer && (
                                                 <span onClick={()=>handleShow(question)}>
                                                     <span className='badge badge-primary cursor-pointer'><i class="fa fa-reply"></i></span>
-                                                </span>) : question.answer}
+                                                </span>)}
+                                                {question && question.answer && question.answer.length > 100 ? <span onClick={()=>setShowAnswer(question.answer)}>
+                                                    <span className='badge badge-primary cursor-pointer'><i class="fa fa-eye"></i></span>
+                                                </span> : question.answer}
                                             </td>
                                             <td> 
                                                 {question.status ?
