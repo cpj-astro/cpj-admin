@@ -78,6 +78,8 @@ export default function AskedQuestions() {
         .then((response) => {
             if(response.data.success){
                 fetchAskedQuestionsData();
+                setQuestionData([]);
+                setAnswer(null);
                 setShow(false);
             }
         }).catch((error) => {
