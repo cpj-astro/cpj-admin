@@ -2,16 +2,21 @@ import React, { useEffect, useState } from 'react'
 import { collection, query, where, getDocs, onSnapshot , doc, updateDoc, setDoc} from "firebase/firestore";
 import { db } from '../../auth-files/fbaseconfig';
 import axios from 'axios';
+import Modal from 'react-bootstrap/Modal';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import swal from 'sweetalert';
+import { Button } from 'react-bootstrap';
 import Header from '../../components/header';
 import SideNav from '../../components/side-nav';
 import Footer from '../../components/footer';
 
 export default function AskedQuestions() {
+    const [questionData, setQuestionData] = useState([]);
     const [questions, setAskedQuestions] = useState([]);
+    const [answer, setAnswer] = useState(null);
     const navigate = useNavigate();
+    const [show, setShow] = useState(false);
     var accessToken = localStorage.getItem('auth_token');
     const apiConfig = {
         headers: {
@@ -24,7 +29,6 @@ export default function AskedQuestions() {
         try {
             axios.get(process.env.REACT_APP_DEV === 'true' ? `${process.env.REACT_APP_DEV_API_URL}/asked-questions` : `${process.env.REACT_APP_LOCAL_API_URL}/asked-questions`, apiConfig)
             .then((response) => {
-                console.log('response', response);
                 if(response.data.success){
                     setAskedQuestions(response.data.data);
                 }
@@ -51,6 +55,36 @@ export default function AskedQuestions() {
         });
     }
 
+    const handleClose = () => {
+        setShow(false);
+        setQuestionData([]);
+        setAnswer(null);
+    };
+    
+    const handleShow = (data) => {
+        if(data) {
+            setQuestionData(data);
+            setShow(true);
+        }
+        return false;
+    }
+
+    const sumbitAnswer = () => {
+        const params = {
+            id: questionData.id,
+            answer: answer
+        }
+        axios.post(process.env.REACT_APP_DEV === 'true' ? `${process.env.REACT_APP_DEV_API_URL}/sumbitAnswer` : `${process.env.REACT_APP_LOCAL_API_URL}/sumbitAnswer`, params, apiConfig)
+        .then((response) => {
+            if(response.data.success){
+                fetchAskedQuestionsData();
+                setShow(false);
+            }
+        }).catch((error) => {
+            console.log(error)
+        });
+    }
+
     useEffect(() => {
         fetchAskedQuestionsData();
     },[])  
@@ -58,12 +92,31 @@ export default function AskedQuestions() {
         <>
             <Header/>
             <div className="content-wrapper">
+                <Modal size="lg" show={show} onHide={handleClose}>
+                    <Modal.Header>
+                        <Modal.Title>
+                            Reply Wtsp No.: {questionData.wtsp_number ? questionData.wtsp_number : 'N/A'}
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <textarea
+                            rows={10}
+                            className='form-control'
+                            value={answer}
+                            onChange={(e) => setAnswer(e.target.value)}
+                        />
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>Close</Button>
+                        <Button variant="primary" onClick={sumbitAnswer}>Submit</Button>
+                    </Modal.Footer>
+                </Modal>
                 {/* Content Header (Page header) */}
                 <section className="content-header">
                     <div className="container-fluid">
                     <div className="row mb-2">
                         <div className="col-sm-6">
-                        <h1>questions</h1>
+                        <h1>Questions</h1>
                         </div>
                     </div>
                     </div>{/* /.container-fluid */}
@@ -83,19 +136,16 @@ export default function AskedQuestions() {
                             <table id="example4" className="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Sr. No.</th>
                                         <th>WhatsApp Number</th>
                                         <th>View User</th>
                                         <th>Question</th>
                                         <th>Answer</th>
                                         <th>Status</th>
-                                        <th className="text-center" style={{width: '100px'}}>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {(questions && questions.length > 0) ? questions.map((question, index) => (
                                         <tr>
-                                            <td> {index+1} </td>
                                             <td> {question.wtsp_number ? question.wtsp_number : 'N/A'} </td>
                                             <td> 
                                                 <Link to={`/user-details/${question.user_id}`}>
@@ -103,7 +153,12 @@ export default function AskedQuestions() {
                                                 </Link>
                                             </td>
                                             <td> {question.question ? question.question : 'N/A'} </td>
-                                            <td> {question.answer ? question.answer : 'N/A'} </td>
+                                            <td> 
+                                                {question && !question.answer ? (
+                                                <span onClick={()=>handleShow(question)}>
+                                                    <span className='badge badge-primary cursor-pointer'><i class="fa fa-reply"></i></span>
+                                                </span>) : question.answer}
+                                            </td>
                                             <td> 
                                                 {question.status ?
                                                     <span className='badge badge-danger text-bold cursor-pointer' onClick={()=>{changeQuestionStatus(question.id, question.status)}}>
@@ -117,7 +172,7 @@ export default function AskedQuestions() {
                                         </tr>
                                     )) : 
                                         <tr>
-                                            <td colSpan={7}>
+                                            <td colSpan={5}>
                                                 No questions
                                             </td>
                                         </tr>
@@ -125,13 +180,11 @@ export default function AskedQuestions() {
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>Sr. No.</th>
                                         <th>WhatsApp Number</th>
                                         <th>View User</th>
                                         <th>Question</th>
                                         <th>Answer</th>
                                         <th>Status</th>
-                                        <th className="text-center" style={{width: '100px'}}>Action</th>
                                     </tr>
                                 </tfoot>
                             </table>
