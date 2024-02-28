@@ -94,6 +94,7 @@ export default function LiveMatches() {
         axios.post(process.env.REACT_APP_DEV === 'true' ? `${process.env.REACT_APP_DEV_API_URL}/updateMatchAstroStatus` : `${process.env.REACT_APP_LOCAL_API_URL}/updateMatchAstroStatus`, params, apiConfig)
         .then((response) => {
             if(response.data.success){
+                setDoc(doc(db, "matchdata", String(id)), {astrology_status: status, astro_on_live: true}, {merge: true});
                 fetchLiveList();
             }
         }).catch((error) => {
