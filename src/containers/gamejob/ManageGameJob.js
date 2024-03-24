@@ -152,7 +152,7 @@ export default function ManageGameJob() {
                         <div className='row'>
                                 <div className='col-md-8'>
                                     <label className="form-label fw-bold">Game Link:</label>
-                                    <input className="form-control" type="text" placeholder="Enter User Name" required {...register("game_link")} />
+                                    <input className="form-control" type="text" placeholder="Enter Game Link" required {...register("game_link")} />
                                 </div>
                                 <div className='col-md-4'>
                                     <label className="form-label fw-bold">Status:</label>

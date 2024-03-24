@@ -38,7 +38,6 @@ export default function PlayersList() {
         try {
             axios.get(process.env.REACT_APP_DEV === 'true' ? `${process.env.REACT_APP_DEV_API_URL}/getPlayersList` : `${process.env.REACT_APP_LOCAL_API_URL}/getPlayersList`, apiConfig)
             .then((response) => {
-                console.log('response', response);
                 if(response.data.success){
                     setPlayers(response.data.data);
                 }

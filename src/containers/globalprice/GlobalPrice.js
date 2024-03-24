@@ -1,0 +1,224 @@
+import React, { useEffect, useState } from 'react'
+import { useForm } from "react-hook-form";
+import swal from 'sweetalert';
+import { FiEdit2, FiTrash2 , FiEye} from 'react-icons/fi';
+import { Table } from 'react-bootstrap';
+import axios from 'axios';
+import moment from 'moment';
+import Footer from '../../components/footer';
+import SideNav from '../../components/side-nav';
+import Header from '../../components/header';
+import { toast } from 'react-toastify';
+
+export default function ManageGlobalPrice() {
+    var accessToken = localStorage.getItem('auth_token');
+    const { register, handleSubmit, setValue, getValues, watch, reset, formState, formState: { isSubmitSuccessful } } = useForm();
+    const [globalprice, setGlobalPrice] = useState([]);
+    
+    const fetchGlobalPriceList = () => {
+        var accessToken = localStorage.getItem('auth_token');
+        const apiConfig = {
+            headers: {
+                Authorization: "Bearer " + accessToken,
+                'Content-Type': 'application/json',
+            }
+        };
+        axios.get(process.env.REACT_APP_DEV === 'true' ? `${process.env.REACT_APP_DEV_API_URL}/getAllGlobalPrices` : `${process.env.REACT_APP_LOCAL_API_URL}/getAllGlobalPrices`, apiConfig)
+        .then((response) => {
+            if(response.data.success){
+                setGlobalPrice(response.data.data);
+            }
+        }).catch((error) => {
+            toast.error("Oh Snap!" + error.code);
+        });
+    } 
+    
+    const onSubmit = async (data) => {    
+        const formData = new FormData();
+        formData.append("price", data.price);
+        formData.append("status", data.status);
+
+        const apiConfig = {
+            headers: {
+                Authorization: "Bearer " + accessToken,
+                'Content-Type': 'multipart/form-data',
+            }
+        };
+
+        axios.post(process.env.REACT_APP_DEV === 'true' ? `${process.env.REACT_APP_DEV_API_URL}/globalPrice${data.id ? '/' + data.id : ''}` : `${process.env.REACT_APP_LOCAL_API_URL}/globalPrice${data.id ? '/' + data.id : ''}`, formData, apiConfig)
+        .then((response) => {
+            if(response.data.success){
+                fetchGlobalPriceList();
+                toast.success(response.data.msg);
+            } else {
+                fetchGlobalPriceList();
+                toast.error(response.data.msg);
+            }
+        }).catch((error) => {
+            toast.error(error.code);
+        });
+    }
+
+    const editGlobalPrice = (id) => {
+        const apiConfig = {
+            headers: {
+                Authorization: "Bearer " + accessToken,
+                'Content-Type': 'application/json',
+            }
+        };
+        axios.get(process.env.REACT_APP_DEV === 'true' ? `${process.env.REACT_APP_DEV_API_URL}/globalPrice/${id}` : `${process.env.REACT_APP_LOCAL_API_URL}/globalPrice/${id}`, apiConfig)
+        .then((response) => {
+            if(response.data.success){
+                let GlobalPriceData = response.data.data;
+                if(GlobalPriceData.id) {
+                    setValue('id', GlobalPriceData.id)
+                } 
+                setValue('price', GlobalPriceData.price); 
+                setValue('status',GlobalPriceData.status); 
+                fetchGlobalPriceList();
+            } else {
+                toast.error(response.data.msg);
+            }
+        }).catch((error) => {
+            toast.error(error.code);
+        });
+    }
+
+    const deleteGlobalPrice = (id) => {
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this price!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((isConfirm) => {
+            if(isConfirm){
+                const apiConfig = {
+                    headers: {
+                        Authorization: "Bearer " + accessToken,
+                        'Content-Type': 'application/json',
+                    }
+                };
+                axios.delete(process.env.REACT_APP_DEV === 'true' ? `${process.env.REACT_APP_DEV_API_URL}/globalPrice/${id}` : `${process.env.REACT_APP_LOCAL_API_URL}/globalPrice/${id}`, apiConfig)
+                .then((response) => {
+                    if(response.data.success){
+                        fetchGlobalPriceList();
+                        toast.success(response.data.msg);
+                    } else {
+                        fetchGlobalPriceList();
+                        toast.error(response.data.msg);
+                    }
+                }).catch((error) => {
+                    toast.error(error.code);
+                });
+            }
+        })
+    }
+
+    useEffect(() => {
+        fetchGlobalPriceList();
+    }, [])
+
+    useEffect(() => {
+        if (formState.isSubmitSuccessful) {
+          reset();
+        }
+    }, [formState, reset]);
+    return (
+        <>
+            <Header/>
+            <div className="content-wrapper">
+                <section className="content-header">
+                    <div className="container-fluid">
+                        <div className="row mb-2">
+                        <div className="col-sm-6">
+                            <h1>Manage GlobalPrice</h1>
+                        </div>
+                        <div className="col-sm-6">
+                            <ol className="breadcrumb float-sm-right">
+                            <li className="breadcrumb-item"><a href={`${process.env.REACT_APP_PUBLIC_URL}/`}>GlobalPrice</a></li>
+                            <li className="breadcrumb-item active">Manage GlobalPrice</li>
+                            </ol>
+                        </div>
+                        </div>
+                    </div>
+                </section>
+                <section className="content">
+                    <div className="container-fluid">
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                        <input type="hidden" {...register("id")} value={null}/>    
+                
+                        <div className='row'>
+                                <div className='col-md-8'>
+                                    <label className="form-label fw-bold">Global Price:</label>
+                                    <input className="form-control" type="text" placeholder="Enter Price" required {...register("price")} />
+                                </div>
+                                <div className='col-md-4'>
+                                    <label className="form-label fw-bold">Status:</label>
+                                    <select className='form-control' {...register("status")} required>   
+                                        <option value={0} key='1'>In Active</option>
+                                        <option value={1} key='2'>Active</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className='row mt-3'>
+                                <div className='col-md-3'>
+                                    <div className='row'>
+                                        <div className='col-md-6'>
+                                            <input type="reset" value="CLEAR" className='btn btn-secondary w-100'/>
+                                        </div>
+                                        <div className='col-md-6'>
+                                            <input type="submit" value="SUBMIT" className='btn btn-primary w-100'/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div className='row'>
+                            <div className='col-md-12'>
+                                <hr/>
+                                <h2>GlobalPrice List</h2>
+                                <hr/>
+                                <Table striped bogpered hover>
+                                    <thead>
+                                        <tr>
+                                            <th>Price</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {(globalprice && globalprice.length > 0) ? globalprice.map((gp, index) => (
+                                        <tr>
+                                            <td>{gp.price ?? 'N/A'}</td>
+                                            <td>{gp.status === 1 ? 'Active' : 'In-Active' }</td>
+                                            <td width="100"> 
+                                                <button className="btn btn-info btn-sm ms-2 text-white" title="View" type="button" onClick={() => {editGlobalPrice(gp.id)}}>
+                                                    <FiEdit2/>
+                                                </button>
+                                                {/* <button className="btn btn-danger btn-sm ms-2" title="View" type="button" onClick={() => {deleteGlobalPrice(gp.id)}}>
+                                                    <FiTrash2/>
+                                                </button> */}
+                                            </td>
+                                        </tr>
+                                    )) : 
+                                        <tr>
+                                            <td colSpan={7} className='text-center'>
+                                                No GlobalPrices
+                                            </td>
+                                        </tr>
+                                    }
+                                    </tbody>
+                                </Table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <SideNav/>
+            <Footer/>
+        </>
+    )
+}

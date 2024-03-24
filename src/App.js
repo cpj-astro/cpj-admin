@@ -35,6 +35,10 @@ import ManageGameJob from './containers/gamejob/ManageGameJob';
 import ManageVisitors from './containers/visitors/ManageVisitors';
 import ManageTeams from './containers/teams/ManageTeams';
 import AskedQuestions from './containers/questions/AskedQuestions';
+import ManageGlobalPrice from './containers/globalprice/GlobalPrice';
+import AddFaq from './containers/faq/AddFaq';
+import FaqList from './containers/faq/FaqList';
+import EditFaq from './containers/faq/EditFaq';
 
 export default function App() {
   return (
@@ -67,6 +71,11 @@ export default function App() {
               <Route path="/pandits-list" element={<PanditsList/>} />
               <Route path="/edit-pandit/:id" element={<EditPandit/>} />
 
+              {/* Faqs Routes */}
+              <Route path="/add-faq" element={<AddFaq/>} />
+              <Route path="/faqs-list" element={<FaqList/>} />
+              <Route path="/edit-faq/:id" element={<EditFaq/>} />
+
               {/* Players Routes */}
               <Route path="/add-player" element={<AddPlayer/>} />
               <Route path="/players-list" element={<PlayersList/>} />
@@ -90,6 +99,9 @@ export default function App() {
 
               {/* GameJob Routes */}
               <Route path="/manage-gamejob" element={<ManageGameJob/>} />
+
+              {/* Global Price Routes */}
+              <Route path="/manage-global-price" element={<ManageGlobalPrice/>} />
 
               {/* Visitors Routes */}
               <Route path="/manage-visitors" element={<ManageVisitors/>} />

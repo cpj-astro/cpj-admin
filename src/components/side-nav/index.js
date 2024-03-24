@@ -81,6 +81,12 @@ export default function SideNav() {
                             </a>
                         </li>
                         <li className="nav-item">
+                            <a href={`${process.env.REACT_APP_PUBLIC_URL}/manage-global-price`} className="nav-link">
+                                <i className="fas fa-credit-card nav-icon text-secondary" />
+                                <p>Global Price</p>
+                            </a>
+                        </li>
+                        <li className="nav-item">
                             <a href={`${process.env.REACT_APP_PUBLIC_URL}/manage-gamejob`} className="nav-link">
                                 <i className="fas fa-gamepad nav-icon text-secondary" />
                                 <p>Game Zop</p>
@@ -96,6 +102,12 @@ export default function SideNav() {
                             <a href={`${process.env.REACT_APP_PUBLIC_URL}/asked-questions`} className="nav-link">
                                 <i className="fas fa-question nav-icon text-secondary" />
                                 <p>Asked Questions</p>
+                            </a>
+                        </li>
+                        <li className="nav-item">
+                            <a href={`${process.env.REACT_APP_PUBLIC_URL}/faqs-list`} className="nav-link">
+                                <i className="fas fa-comment nav-icon text-secondary" />
+                                <p>FAQs</p>
                             </a>
                         </li>
                     </ul>
